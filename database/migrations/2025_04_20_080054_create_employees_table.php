@@ -32,7 +32,9 @@ return new class extends Migration
             $table->text('address');
             $table->timestamps();
 
-            $table->foreignId('designation_id')
+            $table->foreign('designation_id')
+                ->references('id')
+                ->on('designations')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
