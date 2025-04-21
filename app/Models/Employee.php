@@ -19,6 +19,7 @@ class Employee extends Model
         'phone',
         'gender',
         'religion',
+        'place_of_birth',
         'date_of_birth',
         'date_of_joining',
         'marital_status',

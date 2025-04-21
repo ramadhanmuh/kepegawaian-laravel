@@ -23,6 +23,7 @@ return new class extends Migration
                 'islam', 'kristen_protestan', 'kristen_katolik',
                 'hindu', 'buddha', 'konghucu'
             ]);
+            $table->string('place_of_birth');
             $table->date('date_of_birth');
             $table->date('date_of_joining');
             $table->enum('marital_status', [
