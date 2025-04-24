@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('notloggedin')->group(function () {
@@ -15,13 +16,16 @@ Route::middleware('notloggedin')->group(function () {
     Route::prefix('forgot-password')->group(function () {
         Route::name('forgot-password.')->group(function () {
             Route::get('/', [ForgotPasswordController::class, 'index'])->name('index');
-            Route::post('/', [ForgotPasswordController::class, 'reset'])->name('reset');
+            Route::post('/', [ForgotPasswordController::class, 'reset'])->name('reset')->middleware('throttle:5,5');
         });
     });
 
-    Route::get('reset-password', function (string $token) {
-        return view('auth.reset-password', ['token' => $token]);
-    })->name('password.reset');
+    Route::prefix('reset-password')->group(function () {
+        Route::name('reset-password.')->group(function () {
+            Route::get('/', [ResetPasswordController::class, 'index'])->name('index');
+            Route::post('/', [ResetPasswordController::class, 'update'])->name('update');
+        });
+    });
 });
 
 Route::middleware('haveloggedin')->group(function () {

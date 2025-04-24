@@ -2,9 +2,11 @@
 
 namespace App\Mail;
 
+use App\Models\Application;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
@@ -26,7 +28,11 @@ class ResetPassword extends Mailable
      */
     public function envelope(): Envelope
     {
+        $application = Application::select(['name'])
+                                ->first();
+
         return new Envelope(
+            from: new Address(env('MAIL_FROM_ADDRESS'), $application->name),
             subject: 'Atur Ulang Kata Sandi',
         );
     }

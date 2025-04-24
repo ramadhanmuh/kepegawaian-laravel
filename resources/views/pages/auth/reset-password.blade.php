@@ -1,10 +1,10 @@
 @extends('layouts.auth')
 
-@section('title', 'Lupa Kata Sandi')
-@section('description', 'Halaman untuk pemulihan kata sandi.')
+@section('title', 'Atur Ulang Kata Sandi')
+@section('description', 'Halaman untuk mengubah kata sandi.')
 
 @section('content')
-    <div class="card-header"><h3 class="text-center font-weight-light my-4">Pemulihan Kata Sandi</h3></div>
+    <div class="card-header"><h3 class="text-center font-weight-light my-4">Atur Ulang Kata Sandi</h3></div>
 
     @if ($errors->any())
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -32,16 +32,19 @@
     @endsession
     
     <div class="card-body">
-        <div class="small mb-3 text-muted">Masukkan email anda dan kami akan kirim kamu sebuah tautan untuk atur ulang jara sandi anda.</div>
-        <form method="POST" action="{{ route('forgot-password.reset') }}">
+        <form method="POST">
             @csrf
             <div class="form-floating mb-3">
-                <input class="form-control" id="inputEmail" name="email" type="email" placeholder="name@example.com" required />
-                <label for="inputEmail">Email</label>
+                <input class="form-control" id="password" name="password" type="password" placeholder="********" required />
+                <label for="password">Kata Sandi</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input class="form-control" id="password_confirmation" name="password_confirmation" type="password" placeholder="********" required />
+                <label for="password_confirmation">Konfirmasi Kata Sandi</label>
             </div>
             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                 <a class="small" href="{{ route('login.view') }}">Masuk</a>
-                <button class="btn btn-primary" type="submit">Atur Ulang Kata Sandi</button>
+                <button class="btn btn-primary" type="submit">Simpan</button>
             </div>
         </form>
     </div>
