@@ -10,5 +10,7 @@ class DashboardController extends Controller
     function index() {
         $data['application'] = Application::select(['name', 'copyright', 'favicon'])
                                             ->first();
+
+        return view('pages.dashboard.dashboard', $data);
     }
 }

@@ -33,7 +33,7 @@
                 <label class="form-check-label" for="remember_me">Selalu Masuk</label>
             </div>
             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                <a class="small" href="password.html">Lupa Kata Sandi ?</a>
+                <a class="small" href="{{ route('forgot-password.index') }}">Lupa Kata Sandi ?</a>
                 <button type="submit" class="btn btn-primary">Masuk</button>
             </div>
         </form>
