@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\SuperAdmin\ChangePasswordController;
 use App\Http\Controllers\SuperAdmin\DashboardController as SuperAdminDashboardController;
 use App\Http\Controllers\SuperAdmin\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -50,6 +51,13 @@ Route::middleware('haveloggedin')->group(function () {
                         Route::get('/', [ProfileController::class, 'index'])->name('index');
                         Route::get('edit', [ProfileController::class, 'edit'])->name('edit');
                         Route::put('edit', [ProfileController::class, 'update'])->name('update');
+                    });
+                });
+
+                Route::prefix('change-password')->group(function () {
+                    Route::name('change-password.')->group(function () {
+                        Route::get('/', [ChangePasswordController::class, 'edit'])->name('edit');
+                        Route::put('', [ChangePasswordController::class, 'update'])->name('update');
                     });
                 });
                 

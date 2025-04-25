@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('full_name');
             $table->string('number')->unique();
             $table->unsignedBigInteger('designation_id');
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
             $table->string('phone')->unique();
             $table->enum('gender', ['pria', 'wanita']);
             $table->enum('religion', [

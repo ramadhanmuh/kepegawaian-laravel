@@ -17,6 +17,12 @@
             </a>
         </div>
         <div class="col-12">
+            @session('success')
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ $value }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endsession
             <div class="card">
                 <div class="card-body">
                     <div class="row">
@@ -34,7 +40,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <b>Jenis Pengguna</b>
-                            <p class="m-0">{{ $item->role }}</p>
+                            <p class="m-0">{{ $item->role === 'super_admin' ? 'Super Admin' : 'Admin' }}</p>
                         </div>
                         <div class="col-md-6 mb-3 mb-md-0">
                             <b>Tanggal Dibuat</b>
