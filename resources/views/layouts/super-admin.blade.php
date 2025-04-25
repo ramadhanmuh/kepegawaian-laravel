@@ -11,11 +11,11 @@
         @stack('styles')
     </head>
     <body class="sb-nav-fixed">
-        @include('components.dashboard.nav')
+        @include('components.super-admin.nav')
         
         <div id="layoutSidenav">
 
-            @include('components.dashboard.sidebar')
+            @include('components.super-admin.sidebar')
             
             <div id="layoutSidenav_content">
                 <main>
@@ -24,11 +24,12 @@
                     </div>
                 </main>
                 
-                @include('components.dashboard.footer')
+                @include('components.super-admin.footer')
             </div>
         </div>
         <script defer src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script defer src="{{ url('template/js/scripts.js') }}"></script>
         @stack('scripts')
     </body>
 </html>

@@ -29,8 +29,12 @@ class AuthController extends Controller
         }
 
         $request->session()->regenerate();
+
+        if (Auth::user()->role === 'super_admin') {
+            return redirect()->route('super-admin.dashboard.index');
+        }
  
-        return redirect()->route('dashboard.index');
+        return redirect()->route('admin.dashboard.index');
     }
 
     function logout(Request $request): RedirectResponse {

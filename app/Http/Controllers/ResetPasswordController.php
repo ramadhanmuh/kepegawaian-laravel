@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class ResetPasswordController extends Controller
@@ -64,7 +65,7 @@ class ResetPasswordController extends Controller
 
         User::where('email', $email)
             ->limit(1)
-            ->update(['password' => $password]);
+            ->update(['password' => Hash::make($password)]);
 
         DB::table('password_reset_tokens')
             ->where('email', '=', $email)

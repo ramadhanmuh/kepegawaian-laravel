@@ -17,7 +17,11 @@ class NotLoggedInMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check() || Auth::viaRemember()) {
-            return redirect()->route('dashboard.index');
+            if (Auth::user()->role === 'super_admin') {
+                return redirect()->route('super-admin.dashboard.index');
+            } else {
+                return redirect()->route('admin.dashboard.index');
+            }
         }
 
         return $next($request);

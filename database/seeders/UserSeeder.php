@@ -19,5 +19,13 @@ class UserSeeder extends Seeder
             'phone' => '082298114878',
             'role' => 'super_admin',
         ]);
+
+        User::create([
+            'name' => 'Amar',
+            'email' => 'amar@gmail.com',
+            'password' => 'amar',
+            'phone' => '082298124728',
+            'role' => 'admin',
+        ]);
     }
 }
