@@ -43,16 +43,24 @@
         </div>
     </div>
 
-    <div class="card-footer">
-        <div class="col-12 mb-3 small">
-            Silahkan menyetujui persetujuan penggunaan cookie di bawah ini untuk melanjutkan situs ini.
+    @if (! request()->cookie('cookie_consent'))
+        <div class="card-footer">
+            <div class="col-12 mb-3 small">
+                Silahkan menyetujui persetujuan penggunaan cookie di bawah layar untuk melanjutkan situs ini.
+            </div>
         </div>
-    </div>
+    @endif
 
     @if (!request()->cookie('cookie_consent'))
         <div id="cookie-banner" style="z-index: 1000;" class="start-0 bottom-0 w-100 bg-dark position-fixed text-white p-1 px-2">
-            Situs ini menggunakan cookie untuk meningkatkan pengalaman Anda. 
-            <button onclick="acceptCookies()" class="btn btn-primary" type="button">Saya Setuju</button>
+            <div class="row justify-content-between align-items-center">
+                <div class="col-auto">
+                    Situs ini menggunakan cookie untuk meningkatkan pengalaman Anda.    
+                </div>
+                <div class="col-auto">
+                    <button onclick="acceptCookies()" id="accept_cookie_button" class="btn btn-primary" type="button">Saya Setuju</button>
+                </div>
+            </div>
         </div>
     @endif
 @endsection
@@ -61,15 +69,32 @@
     @if (!request()->cookie('cookie_consent'))
         <script>
             function acceptCookies() {
-                fetch('{{ route("accept-cookie") }}', {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
+                var acceptCookieButton = document.getElementById('accept_cookie_button');
+                
+                acceptCookieButton.innerText = 'Memuat...';
+
+                var xhr = new XMLHttpRequest();                
+
+                var method = 'POST';
+
+                var url = '{{ route("accept-cookie") }}';
+
+                xhr.open(method, url, true);
+
+                xhr.onreadystatechange = function() {
+                    // Selesai
+                    if (xhr.readyState === 4) {
+                        // Berhasil
+                        if (xhr.status === 200) {
+                            document.getElementById('cookie-banner').remove();
+                        } else {
+                            acceptCookieButton.innerText = 'Saya Setuju';
+                            alert('Gagal menyetujui penggunaan cookie.');
+                        }
                     }
-                }).then(() => {
-                    document.getElementById('cookie-banner').remove();
-                });
+                };
+
+                xhr.send();
             }
         </script>
     @endif

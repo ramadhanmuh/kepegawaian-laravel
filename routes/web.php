@@ -6,7 +6,7 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\SuperAdmin\ChangePasswordController;
-use App\Http\Controllers\SuperAdmin\DashboardController as SuperAdminDashboardController;
+use App\Http\Controllers\SuperAdmin\DashboardController;
 use App\Http\Controllers\SuperAdmin\DeleteAccountController;
 use App\Http\Controllers\SuperAdmin\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -49,7 +49,7 @@ Route::middleware('cookieconsent')->group(function () {
         
                     Route::prefix('dashboard')->group(function () {
                         Route::name('dashboard.')->group(function () {
-                            Route::get('/', [SuperAdminDashboardController::class, 'index'])->name('index');
+                            Route::get('/', [DashboardController::class, 'index'])->name('index');
                         });
                     });
     

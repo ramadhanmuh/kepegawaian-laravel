@@ -18,6 +18,7 @@ class HomeController extends Controller
     }
 
     function acceptCookie(Request $request) : Response {
+        dd('test');
         // Berlaku 1 tahun
         return response('OK')->cookie('cookie_consent', true, 525600);
     }
