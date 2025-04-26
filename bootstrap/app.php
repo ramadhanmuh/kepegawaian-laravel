@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckCookieConsent;
 use App\Http\Middleware\HaveLoggedInMiddleware;
 use App\Http\Middleware\NotLoggedInMiddleware;
 use Illuminate\Foundation\Application;
@@ -14,8 +15,13 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
+            'cookieconsent' => CheckCookieConsent::class,
             'notloggedin' => NotLoggedInMiddleware::class,
             'haveloggedin' => HaveLoggedInMiddleware::class,
+        ]);
+
+        $middleware->validateCsrfTokens(except: [
+            'accept-cookies',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

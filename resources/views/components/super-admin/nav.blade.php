@@ -10,6 +10,12 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 <li><a class="dropdown-item" href="{{ route('super-admin.profile.index') }}">Profil</a></li>
                 <li><a class="dropdown-item" href="{{ route('super-admin.change-password.edit') }}">Ubah Kata Sandi</a></li>
+                <li>
+                    <form action="{{ route('super-admin.delete-account') }}" method="post">
+                        @csrf
+                        <button type="submit" class="dropdown-item">Hapus Akun</button>
+                    </form>
+                </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
                     <form action="{{ route('super-admin.logout') }}" method="post">

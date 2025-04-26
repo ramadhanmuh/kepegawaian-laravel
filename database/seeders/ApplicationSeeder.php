@@ -14,6 +14,7 @@ class ApplicationSeeder extends Seeder
     {
         Application::create([
             'name' => 'Kepegawaian',
+            'description' => 'Sebuah situs untuk mengelola informasi pegawai.',
             'copyright' => 'kepegawaian 2025',
             'favicon' => 'assets/favicon/favicon.ico',
         ]);
