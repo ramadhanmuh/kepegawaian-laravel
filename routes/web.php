@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\SuperAdmin\ApplicationController;
 use App\Http\Controllers\SuperAdmin\ChangePasswordController;
 use App\Http\Controllers\SuperAdmin\DashboardController;
 use App\Http\Controllers\SuperAdmin\DeleteAccountController;
@@ -70,6 +71,14 @@ Route::middleware('cookieconsent')->group(function () {
                     });
     
                     Route::post('delete-account', [DeleteAccountController::class, 'destroy'])->name('delete-account');
+
+                    Route::prefix('application')->group(function () {
+                        Route::name('application.')->group(function () {
+                            Route::get('/', [ApplicationController::class, 'index'])->name('index');
+                            Route::get('edit', [ApplicationController::class, 'edit'])->name('edit');
+                            Route::put('edit', [ApplicationController::class, 'update'])->name('update');
+                        });
+                    });
                     
                 });
             });

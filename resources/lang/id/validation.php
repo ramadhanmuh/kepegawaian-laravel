@@ -42,6 +42,7 @@ return [
     'email'          => ':attribute harus berupa alamat surel yang valid.',
     'ends_with'      => ':attribute harus diakhiri salah satu dari berikut: :values',
     'exists'         => ':attribute yang dipilih tidak valid.',
+    'extensions'     => ':attribute harus memiliki salah satu ekstensi berikut: :values.',
     'file'           => ':attribute harus berupa sebuah berkas.',
     'filled'         => ':attribute harus memiliki nilai.',
     'gt'             => [

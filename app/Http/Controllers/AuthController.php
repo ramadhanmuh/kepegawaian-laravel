@@ -7,17 +7,20 @@ use App\Models\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class AuthController extends Controller
 {
-    function view() {
+    function view(): View
+    {
         $data['application'] = Application::select(['name', 'copyright', 'favicon'])
                                         ->first();
 
         return view('pages.auth.login', $data);
     }
 
-    function authenticate(AuthenticateRequest $request): RedirectResponse {
+    function authenticate(AuthenticateRequest $request): RedirectResponse
+    {
         $credentials = $request->only('email', 'password');
 
         $remember = empty($request->remember_me) ? false : true;

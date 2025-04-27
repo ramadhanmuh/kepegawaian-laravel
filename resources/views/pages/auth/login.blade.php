@@ -32,7 +32,7 @@
     @endsession
     
     <div class="card-body">
-        <form method="POST" action="{{ route('login.authenticate') }}/">
+        <form method="POST" action="{{ route('login.authenticate') }}">
             @csrf
             <div class="form-floating mb-3">
                 <input class="form-control" name="email" id="email" type="email" placeholder="name@example.com" required />
