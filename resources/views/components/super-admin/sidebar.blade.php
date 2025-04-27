@@ -27,7 +27,7 @@
                 </a>
                 <div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="layout-static.html">Pengguna</a>
+                        <a class="nav-link" href="{{ route('super-admin.users.index') }}">Pengguna</a>
                         <a class="nav-link" href="{{ route('super-admin.application.index') }}">Aplikasi</a>
                     </nav>
                 </div>

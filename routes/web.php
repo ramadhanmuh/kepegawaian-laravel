@@ -10,6 +10,7 @@ use App\Http\Controllers\SuperAdmin\ChangePasswordController;
 use App\Http\Controllers\SuperAdmin\DashboardController;
 use App\Http\Controllers\SuperAdmin\DeleteAccountController;
 use App\Http\Controllers\SuperAdmin\ProfileController;
+use App\Http\Controllers\SuperAdmin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -79,6 +80,10 @@ Route::middleware('cookieconsent')->group(function () {
                             Route::put('edit', [ApplicationController::class, 'update'])->name('update');
                         });
                     });
+
+                    Route::get('users/list', [UserController::class, 'list'])->name('users.list');
+                    Route::resource('users', UserController::class);
+
                     
                 });
             });

@@ -37,8 +37,6 @@ class ApplicationController extends Controller
         $application = Application::select(['id'])
                                     ->first();
 
-        $input = $request->validated();
-
         if ($request->hasFile('favicon')) {
             $destinationPath = public_path('assets/favicon');
 
@@ -51,7 +49,9 @@ class ApplicationController extends Controller
 
         Application::where('id', $application->id)
                     ->limit(1)
-                    ->update($input);
+                    ->update($request->only([
+                        'name', 'description', 'copyright',
+                    ]));
 
         return redirect()->route('super-admin.application.index')
                         ->with('success', 'Berhasil mengubah data aplikasi.');
