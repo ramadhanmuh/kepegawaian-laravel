@@ -37,11 +37,15 @@ class UserController extends Controller
 
         $length = $request->input('length');
 
-        $length = $length === null || $length > 100 ? 10 : $length;
+        $length = is_numeric($length) || $length > 100 
+                    ? 10
+                    : $length;
 
         $column = $request->input('order.0.column');
 
-        $column = array_key_exists($column, $columns) ? $column : 1;
+        $column = array_key_exists($column, $columns)
+                    ? $column
+                    : 1;
 
         $dir = $request->input('order.0.dir');
 
@@ -51,22 +55,32 @@ class UserController extends Controller
 
         $searchValue = $request->input('search.value');
 
-        $query = User::select('id', 'name', 'email', 'phone', 'role')
-                     ->when($searchValue, function($query, $searchValue) {
-                         $query->where(function($q) use ($searchValue) {
-                             $q->where('name', 'like', "%{$searchValue}%")
-                               ->orWhere('email', 'like', "%{$searchValue}%")
-                               ->orWhere('phone', 'like', "%{$searchValue}%")
-                               ->orWhere('role', 'like', "%{$searchValue}%");
-                         });
-                     });
+        $role = $request->role;
 
+        $query = User::query();
+
+        $query = $query->select('id', 'name', 'email', 'phone', 'role');
+
+        if (is_string($role) && !empty($role)) {
+            $query->where('role', $role);
+        }
+
+        if (is_string($searchValue) && !empty($searchValue)) {
+            $query = $query->when($searchValue, function($query, $searchValue) {
+                                $query->where(function($q) use ($searchValue) {
+                                    $q->where('name', 'like', "%{$searchValue}%")
+                                    ->orWhere('email', 'like', "%{$searchValue}%")
+                                    ->orWhere('phone', 'like', "%{$searchValue}%")
+                                    ->orWhere('role', 'like', "%{$searchValue}%");
+                                });
+                            });
+        }
+        
         $totalFiltered = $query->count();
 
         $users = $query->orderBy($columns[$column], $dir)
                        ->offset($request->input('start'))
                        ->limit($length)
-                       ->limit(10)
                        ->get();
 
         return response()->json([
