@@ -23,6 +23,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endsession
+            @session('error')
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ $value }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endsession
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-3">
@@ -126,7 +132,7 @@
 
                             var editButton = '<a href="' + baseURL + '/super-admin/users/' + row.id + '/edit" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> <span class="d-none d-lg-inline">Ubah</span></a>';
 
-                            var deleteButton = '<form class="d-inline" method="POST" action="' + baseURL + '/super-admin/users/' + row.id + '">@csrf @method('PUT') <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> <span class="d-none d-lg-inline">Hapus</span></button></form>';
+                            var deleteButton = '<form class="d-inline" method="POST" action="' + baseURL + '/super-admin/users/' + row.id + '">@csrf @method('DELETE') <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> <span class="d-none d-lg-inline">Hapus</span></button></form>';
 
                             return detailButton + ' ' + editButton + deleteButton;
                         }

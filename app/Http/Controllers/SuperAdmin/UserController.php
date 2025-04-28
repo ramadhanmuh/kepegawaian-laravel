@@ -9,6 +9,9 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class UserController extends Controller
@@ -75,7 +78,7 @@ class UserController extends Controller
                                 });
                             });
         }
-        
+
         $totalFiltered = $query->count();
 
         $users = $query->orderBy($columns[$column], $dir)
@@ -117,32 +120,119 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): View
     {
-        
+        $data['item'] = User::select([
+            'id', 'name', 'email', 'phone',
+            'role', 'created_at', 'updated_at'
+        ])->find($id);
+
+        if ($data['item'] === null) {
+            abort(404);
+        }
+
+        $data['application'] = Application::select([
+            'name', 'copyright', 'favicon'
+        ])->first();
+
+        return view('pages.super-admin.user.detail', $data);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id): View
     {
-        //
+        $data['item'] = User::select([
+            'id', 'name', 'email', 'phone',
+            'role', 'created_at', 'updated_at'
+        ])->find($id);
+
+        if ($data['item'] === null) {
+            abort(404);
+        }
+
+        $data['application'] = Application::select([
+            'name', 'copyright', 'favicon'
+        ])->first();
+
+        return view('pages.super-admin.user.edit', $data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): RedirectResponse
     {
-        //
+        $item = User::find($id);
+
+        if ($item === null) {
+            abort(404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'name' => [
+                'required', 'string',
+                'max:255',
+            ],
+            'email' => [
+                'required', 'email',
+                'max:255',
+                Rule::unique('users')->ignore($id),
+            ],
+            'password' => [
+                'nullable', 'string',
+            ],
+            'phone' => [
+                'required', 'string',
+                Rule::unique('users')->ignore($id),
+            ],
+            'role' => [
+                'required', 'string',
+                'in:admin,super_admin'
+            ]
+        ], [], [
+            'name' => 'Nama',
+            'email' => 'Email',
+            'password' => 'Kata Sandi',
+            'phone' => 'Nomor Telepon Genggam',
+            'role' => 'Jenis'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+
+        $input = $validator->validated();
+
+        $input['password'] = $input['password'] === null
+                                ? $item->password
+                                : Hash::make($input['password']);
+
+        User::where('id', $id)
+            ->limit(1)
+            ->update($input);
+
+        return redirect()->route('super-admin.users.index')
+                        ->with('success', 'Berhasil mengubah data pengguna.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): RedirectResponse
     {
-        //
+        $item = User::find($id);
+
+        if ($item === null) {
+            abort(404);
+        }
+
+        $item->delete();
+
+        return redirect()->route('super-admin.users.index')
+                        ->with('success', 'Berhasil menghapus data pengguna.');
     }
 }

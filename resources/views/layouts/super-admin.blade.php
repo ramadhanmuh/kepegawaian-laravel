@@ -9,6 +9,7 @@
         <title>{{ $application->name }} - @yield('title')</title>
         <link rel="icon" type="image/x-icon" href="{{ url($application->favicon) }}">
         <link href="{{ url('template/css/styles.css') }}" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
         @stack('styles')
     </head>
     <body class="sb-nav-fixed">
@@ -28,7 +29,6 @@
                 @include('components.super-admin.footer')
             </div>
         </div>
-        <script defer src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script defer src="{{ url('template/js/scripts.js') }}"></script>
         @stack('scripts')
