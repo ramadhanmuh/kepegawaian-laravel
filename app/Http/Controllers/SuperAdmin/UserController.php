@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -146,7 +147,10 @@ class UserController extends Controller
         $data['item'] = User::select([
             'id', 'name', 'email', 'phone',
             'role', 'created_at', 'updated_at'
-        ])->find($id);
+        ])->where('id', $id)
+        ->where('id', '!=', Auth::user()->id)
+        ->where('role', '!=', 'super_admin')
+        ->first();
 
         if ($data['item'] === null) {
             abort(404);
@@ -164,7 +168,13 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id): RedirectResponse
     {
-        $item = User::find($id);
+        $item = User::select([
+            'id', 'name', 'email', 'phone',
+            'role', 'created_at', 'updated_at'
+        ])->where('id', $id)
+        ->where('id', '!=', Auth::user()->id)
+        ->where('role', '!=', 'super_admin')
+        ->first();
 
         if ($item === null) {
             abort(404);
@@ -224,7 +234,13 @@ class UserController extends Controller
      */
     public function destroy(string $id): RedirectResponse
     {
-        $item = User::find($id);
+        $item = User::select([
+            'id', 'name', 'email', 'phone',
+            'role', 'created_at', 'updated_at'
+        ])->where('id', $id)
+        ->where('id', '!=', Auth::user()->id)
+        ->where('role', '!=', 'super_admin')
+        ->first();
 
         if ($item === null) {
             abort(404);

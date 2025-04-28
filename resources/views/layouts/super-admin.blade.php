@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="@yield('description')" />
         <meta name="base-url" content="{{ url('') }}">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{ $application->name }} - @yield('title')</title>
         <link rel="icon" type="image/x-icon" href="{{ url($application->favicon) }}">
         <link href="{{ url('template/css/styles.css') }}" rel="stylesheet" />
