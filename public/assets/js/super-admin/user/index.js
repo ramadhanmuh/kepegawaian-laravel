@@ -30,7 +30,7 @@ $(document).ready(function() {
             {
                 data: 'role',
                 name: 'role',
-                className: 'text-lg-center',
+                className: 'text-xl-center',
                 render: function (data, type, row) {
                     switch (data) {
                         case 'super_admin':
@@ -52,7 +52,7 @@ $(document).ready(function() {
                 name: 'action',
                 orderable: false,
                 searchable: false,
-                className: 'text-lg-center',
+                className: 'text-xl-center',
                 render: function (data, type, row) {
                     var userID = $('#datatable').attr('data-user-id');
 

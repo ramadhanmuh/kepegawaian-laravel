@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('terminations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('termination_type_id');
-            $table->unsignedBigInteger('employee_id');
+            $table->uuid('employee_id');
             $table->string('subject');
             $table->date('notice_date');
             $table->date('termination_date');

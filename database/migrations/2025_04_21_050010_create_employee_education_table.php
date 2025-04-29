@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('employee_education', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('employee_id');
+            $table->uuid('employee_id');
             $table->enum('level', ['sd', 'smp', 'sma', 's1', 's2', 's3']);
             $table->string('school_name');
             $table->text('school_address');

@@ -1,17 +1,17 @@
 @extends('layouts.super-admin')
 
-@section('title', 'Pengguna')
+@section('title', 'Jabatan')
 
-@section('description', 'Halaman untuk melihat informasi daftar pengguna.')
+@section('description', 'Halaman untuk melihat informasi daftar jabatan.')
 
 @section('content')
-    <h1 class="mt-4">Pengguna</h1>
+    <h1 class="mt-4">Jabatan</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">Pengguna</li>
+        <li class="breadcrumb-item active">Jabatan</li>
     </ol>
     <div class="row">
         <div class="col-12 mb-3 text-end">
-            <a href="{{ route('super-admin.users.create') }}" class="btn btn-primary btn-sm">
+            <a href="{{ route('super-admin.designations.create') }}" class="btn btn-primary btn-sm">
                 <i class="fas fa-plus"></i>
                 Tambah
             </a>
@@ -31,24 +31,13 @@
             @endsession
             <div class="card">
                 <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-6 col-md-4 col-lg-3">
-                            <label for="role" class="form-label">Jenis</label>
-                            <select name="role" id="role" class="form-select">
-                                <option value="">Semua</option>
-                                <option value="super_admin">Super Admin</option>
-                                <option value="admin">Admin</option>
-                            </select>
-                        </div>
-                    </div>
-                    <table id="datatable" class="table table-bordered w-100 nowrap" data-user-id="{{ auth()->user()->id }}">
+                    <table id="datatable" class="table table-bordered w-100 nowrap">
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
                                 <th>Nama</th>
-                                <th>Email</th>
-                                <th>Telepon Genggam</th>
-                                <th class="text-xl-center">Jenis</th>
+                                <th class="text-xl-center">Tanggal Dibuat</th>
+                                <th class="text-xl-center">Tanggal Diubah</th>
                                 <th class="text-xl-center">Aksi</th>
                             </tr>
                         </thead>
@@ -70,5 +59,5 @@
     <script defer src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script defer src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
     <script defer src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
-    <script defer src="{{ url('assets/js/super-admin/user/index.js') }}"></script>
+    <script defer src="{{ url('assets/js/super-admin/designation/index.js') }}"></script>
 @endpush

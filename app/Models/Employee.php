@@ -12,6 +12,7 @@ class Employee extends Model
      * @var list<string>
      */
     protected $fillable = [
+        'id',
         'full_name',
         'number',
         'designation_id',
@@ -26,4 +27,18 @@ class Employee extends Model
         'photo',
         'address',
     ];
+
+    /**
+     * The data type of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
+     * Indicates if the model's ID is auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
 }
