@@ -86,7 +86,9 @@ Route::middleware('cookieconsent')->group(function () {
                     Route::resource('users', UserController::class);
 
                     Route::get('designations/list', [DesignationController::class, 'list'])->name('designations.list');
-                    Route::resource('designations', DesignationController::class);
+                    Route::resource('designations', DesignationController::class)->except([
+                        'show'
+                    ]);
                     
                 });
             });

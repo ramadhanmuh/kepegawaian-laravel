@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreDesignationRequest;
 use App\Models\Application;
 use App\Models\Designation;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -81,17 +83,24 @@ class DesignationController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
-        //
+        $data['application'] = Application::select([
+            'name', 'copyright', 'favicon'
+        ])->first();
+
+        return view('pages.super-admin.designation.create', $data);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreDesignationRequest $request): RedirectResponse
     {
-        //
+        Designation::create($request->validated());
+
+        return redirect()->back()
+                        ->with('success', 'Berhasil membuat data jabatan.');
     }
 
     /**
@@ -105,9 +114,19 @@ class DesignationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id): View
     {
-        //
+        $data['item'] = Designation::find($id);
+
+        if ($data['item'] === null) {
+            abort(404);
+        }
+
+        $data['application'] = Application::select([
+            'name', 'copyright', 'favicon'
+        ])->first();
+
+        return view('pages.super-admin.designation.edit', $data);
     }
 
     /**
