@@ -10,6 +10,7 @@ use App\Http\Controllers\SuperAdmin\ChangePasswordController;
 use App\Http\Controllers\SuperAdmin\DashboardController;
 use App\Http\Controllers\SuperAdmin\DeleteAccountController;
 use App\Http\Controllers\SuperAdmin\DesignationController;
+use App\Http\Controllers\SuperAdmin\EmployeeController;
 use App\Http\Controllers\SuperAdmin\ProfileController;
 use App\Http\Controllers\SuperAdmin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -89,6 +90,9 @@ Route::middleware('cookieconsent')->group(function () {
                     Route::resource('designations', DesignationController::class)->except([
                         'show'
                     ]);
+
+                    Route::get('employees/list', [EmployeeController::class, 'list'])->name('employees.list');
+                    Route::resource('employees', EmployeeController::class);
                     
                 });
             });

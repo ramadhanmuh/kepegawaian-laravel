@@ -170,7 +170,8 @@ class UserController extends Controller
     {
         $item = User::select([
             'id', 'name', 'email', 'phone',
-            'role', 'created_at', 'updated_at'
+            'password', 'role', 'created_at',
+            'updated_at'
         ])->where('id', $id)
         ->where('id', '!=', Auth::user()->id)
         ->where('role', '!=', 'super_admin')

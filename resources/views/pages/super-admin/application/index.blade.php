@@ -11,10 +11,16 @@
     </ol>
     <div class="row">
         <div class="col-12 mb-3 text-end">
-            <a href="{{ route('super-admin.application.edit') }}" class="btn btn-warning btn-sm">
-                <i class="fas fa-edit"></i>
-                Ubah
-            </a>
+            <div class="row justify-content-end">
+                <div class="col-auto">
+                    <a href="{{ route('super-admin.application.edit') }}" class="btn btn-warning btn-sm">
+                        <i class="fas fa-edit"></i>
+                        <span class="d-none d-md-inline">
+                            Ubah
+                        </span>
+                    </a>
+                </div>
+            </div>
         </div>
         <div class="col-12">
             @session('success')

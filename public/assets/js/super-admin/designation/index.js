@@ -54,6 +54,10 @@ $(document).ready(function() {
                 name: 'updated_at',
                 className: 'text-xl-center',
                 render: function (data, type, row) {
+                    if (data === row.created_at) {
+                        return '-';
+                    }
+                    
                     return convertToWIB(data);
                 }
             },

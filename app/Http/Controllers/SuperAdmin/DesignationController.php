@@ -9,6 +9,7 @@ use App\Models\Designation;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
 class DesignationController extends Controller
@@ -132,16 +133,51 @@ class DesignationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): RedirectResponse
     {
-        //
+        $item = Designation::find($id);
+
+        if ($item === null) {
+            abort(404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'name' => [
+                'required', 'string',
+                'max:255',
+            ],
+        ], [], [
+            'name' => 'Nama',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+
+        $item->name = $request->name;
+
+        $item->save();
+
+        return redirect()->route('super-admin.designations.index')
+                        ->with('success', 'Berhasil mengubah data jabatan.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): RedirectResponse
     {
-        //
+        $item = Designation::find($id);
+
+        if ($item === null) {
+            abort(404);
+        }
+
+        $item->delete();
+
+        return redirect()->route('super-admin.designations.index')
+                        ->with('success', 'Berhasil menghapus data jabatan.');
     }
 }
