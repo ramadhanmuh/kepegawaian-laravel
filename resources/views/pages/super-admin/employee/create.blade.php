@@ -14,7 +14,7 @@
         </li>
         <li class="breadcrumb-item active">Tambah</li>
     </ol>
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-12">
             @session('success')
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -34,8 +34,9 @@
             @endif
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('super-admin.employees.store') }}" class="row" method="POST">
+                    <form action="{{ route('super-admin.employees.store') }}" class="row" method="POST" enctype="multipart/form-data">
                         @csrf
+                        <input type="hidden" name="id" id="id" required>
                         <div class="col-md-6 mb-3">
                             <label for="full_name" class="form-label">Nama Lengkap <small class="text-danger">*</small></label>
                             <input type="text" class="form-control" id="full_name" name="full_name" value="{{ old('full_name') }}" required>
@@ -52,7 +53,7 @@
                                     <option value="">Jabatan Tidak Ditemukan</option>
                                 @else
                                     @foreach ($designations as $item)
-                                        <option value="{{ $item->id }}" {{ old('designation_id') === $item->id ? 'selected' : '' }}>
+                                        <option value="{{ $item->id }}" {{ old('designation_id') == $item->id ? 'selected' : '' }}>
                                             {{ $item->name }}
                                         </option>
                                     @endforeach
@@ -105,19 +106,18 @@
                                 <option value="">-- Pilih --</option>
                                 <option value="belum_menikah" {{ old('marital_status') === 'belum_menikah' ? 'selected' : '' }}>Belum Menikah</option>
                                 <option value="sudah_menikah" {{ old('marital_status') === 'sudah_menikah' ? 'selected' : '' }}>Sudah Menikah</option>
-                                <option value="kristen_katolik" {{ old('marital_status') === 'kristen_katolik' ? 'selected' : '' }}>Kristen Katolik</option>
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="photo" class="form-label">Foto <small class="text-danger">*</small></label>
-                            <input type="file" class="form-control">
+                            <input type="file" class="form-control" id="photo" name="photo">
                         </div>
                         <div class="col-12 mb-3">
                             <label for="address" class="form-label">Alamat Tempat Tinggal <small class="text-danger">*</small></label>
                             <textarea name="address" id="address" rows="3" class="form-control">{{ old('address') }}</textarea>
                         </div>
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="submit" id="submit_button" class="btn btn-primary" disabled>Simpan</button>
                         </div>
                     </form>  
                 </div>
@@ -125,3 +125,7 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script defer src="{{ url('assets/js/super-admin/employee/create.js') }}"></script>
+@endpush

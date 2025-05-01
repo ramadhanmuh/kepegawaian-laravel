@@ -31,16 +31,28 @@
             @endsession
             <div class="card">
                 <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-3 col-xl-2">
+                            <label for="designation_id" class="form-label">Jabatan</label>
+                            <select name="designation_id" id="designation_id" class="form-select">
+                                <option value="">Semua</option>
+                                @forelse ($designations as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                @empty
+                                @endforelse
+                            </select>
+                        </div>
+                    </div>
                     <table id="datatable" class="table table-bordered w-100 nowrap">
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
                                 <th class="text-center">Foto</th>
-                                <th>Nama</th>
+                                <th>Nama Lengkap</th>
                                 <th>Nomor</th>
                                 <th>Jabatan</th>
                                 <th>Telepon Genggam</th>
-                                <th class="text-xl-center">Aksi</th>
+                                <th>Aksi</th>
                             </tr>
                         </thead>
                     </table>
