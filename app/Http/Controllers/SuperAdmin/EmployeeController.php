@@ -8,7 +8,10 @@ use App\Models\Application;
 use App\Models\Designation;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class EmployeeController extends Controller
 {
@@ -147,10 +150,6 @@ class EmployeeController extends Controller
      */
     public function show(string $id)
     {
-        $data['application'] = Application::select([
-            'name', 'copyright', 'favicon'
-        ])->first();
-
         $data['item'] = Employee::select([
             'employees.full_name', 'employees.number',
             'employees.email', 'employees.phone',
@@ -166,6 +165,14 @@ class EmployeeController extends Controller
         ])->leftJoin('designations', 'employees.designation_id', '=', 'designations.id')
         ->where('employees.id', $id)
         ->first();
+
+        if ($data['item'] === null) {
+            abort(404);
+        }
+
+        $data['application'] = Application::select([
+            'name', 'copyright', 'favicon'
+        ])->first();
         
         return view('pages.super-admin.employee.detail', $data);
     }
@@ -175,7 +182,21 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
+        $data['item'] = Employee::find($id);
+
+        if ($data['item'] === null) {
+            abort(404);
+        }
+
+        $data['application'] = Application::select([
+            'name', 'copyright', 'favicon'
+        ])->first();
+
+        $data['designations'] = Designation::select([
+            'id', 'name'
+        ])->get();
         
+        return view('pages.super-admin.employee.edit', $data);
     }
 
     /**
@@ -183,7 +204,108 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $item = Employee::find($id);
+
+        if ($item === null) {
+            abort(404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'full_name' => [
+                'required', 'string', 'max:255'
+            ],
+            'number' => [
+                'required', 'string', 'max:255',
+                Rule::unique('employees')->ignore($item->id),
+            ],
+            'designation_id' => [
+                'required', 'string', 'exists:designations,id'
+            ],
+            'email' => [
+                'nullable', 'email', 'max:255',
+                Rule::unique('employees')->ignore($item->id),
+            ],
+            'phone' => [
+                'required', 'string', 'max:255',
+                Rule::unique('employees')->ignore($item->id),
+            ],
+            'gender' => [
+                'required', 'string', 'in:pria,wanita'
+            ],
+            'religion' => [
+                'required', 'string',
+                'in:islam,kristen_protestan,kristen_katolik,hindu,buddha,konghucu'
+            ],
+            'place_of_birth' => [
+                'required', 'string', 'max:255'
+            ],
+            'date_of_birth' => [
+                'required', 'string', 'date_format:Y-m-d'
+            ],
+            'date_of_joining' => [
+                'required', 'string', 'date_format:Y-m-d'
+            ],
+            'marital_status' => [
+                'required', 'string',
+                'in:belum_menikah,sudah_menikah'
+            ],
+            'photo' => [
+                'nullable', 'file', 'mimes:jpg,jpeg,png',
+                'max:5120'
+            ],
+            'address' => [
+                'required', 'string', 'max:65535'
+            ],
+        ], [], [
+            'full_name' => 'Nama Lengkap',
+            'number' => 'Nomor Pegawai',
+            'designation_id' => 'Jabatan',
+            'email' => 'Email',
+            'phone' => 'Nomor Telepon Genggam',
+            'gender' => 'Jenis Kelamin',
+            'religion' => 'Agama',
+            'place_of_birth' => 'Tempat Lahir',
+            'date_of_birth' => 'Tanggal Lahir',
+            'date_of_joining' => 'Tanggal Bergabung',
+            'marital_status' => 'Status Pernikahan',
+            'photo' => 'Foto',
+            'address' => 'Alamat',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+
+        $input = $validator->safe()->except(['photo']);
+
+        if ($request->hasFile('photo')) {
+            $photoFileDestinationPath = 'uploads/employee/photo';
+
+            $photoFileDestinationFullPath = public_path($photoFileDestinationPath);
+
+            $photoFile = $request->file('photo');
+
+            $photoFileName = Str::random(40)
+                            . '.'
+                            . $photoFile->getClientOriginalExtension(); 
+
+            $photoFile->move($photoFileDestinationFullPath, $photoFileName);
+
+            $input['photo'] = $photoFileDestinationPath . '/' . $photoFileName;
+
+            File::delete($item->photo);
+        } else {
+            $input['photo'] = $item->photo;
+        }
+
+        Employee::where('id', $id)
+                ->limit(1)
+                ->update($input);
+
+        return redirect()->route('super-admin.employees.index')
+                        ->with('success', 'Berhasil mengubah data pegawai.');
     }
 
     /**

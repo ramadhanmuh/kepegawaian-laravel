@@ -32,6 +32,12 @@ return new class extends Migration
             $table->text('photo');
             $table->text('address');
             $table->timestamps();
+
+            $table->foreign('designation_id')
+                ->references('id')
+                ->on('designations')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

@@ -53,7 +53,7 @@
 
                     <div class="row mb-3">
                         <div class="col-md-4 col-xl-3">
-                            Tanggal Bergabung
+                            Tanggal Masuk Perusahaan
                             <span class="d-md-none">:</span>
                         </div>
                         <div class="col-auto d-none d-md-block">
@@ -143,7 +143,7 @@
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row mb-3">
                         <div class="col-md-4 col-xl-3">
                             Status Pernikahan
                             <span class="d-md-none">:</span>
@@ -162,6 +162,32 @@
                                 @default
                                     -
                             @endswitch
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4 col-xl-3">
+                            Tanggal Dibuat
+                            <span class="d-md-none">:</span>
+                        </div>
+                        <div class="col-auto d-none d-md-block">
+                            :
+                        </div>
+                        <div class="col">
+                            {{ $item->created_at }}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-xl-3">
+                            Tanggal Diubah
+                            <span class="d-md-none">:</span>
+                        </div>
+                        <div class="col-auto d-none d-md-block">
+                            :
+                        </div>
+                        <div class="col">
+                            {{ $item->created_at === $item->updated_at ? '-' : $item->updated_at }}
                         </div>
                     </div>
                 </div>
