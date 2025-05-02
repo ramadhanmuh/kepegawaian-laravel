@@ -31,7 +31,7 @@ $(document).ready(function() {
                 searchable: false,
                 className: 'text-center align-middle',
                 render: function (data) {
-                    return '<img src="'+ baseURL +'/' + data + '" width="80">';
+                    return '<img src="'+ baseURL +'/' + data + '" width="90">';
                 }
             },
             {
@@ -72,8 +72,6 @@ $(document).ready(function() {
                     dropdown += detailButton + editButton + deleteButton;
 
                     dropdown += '</ul></div>';
-
-                    console.log(dropdown);
 
                     return dropdown;
                 }

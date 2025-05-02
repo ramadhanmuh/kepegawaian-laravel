@@ -32,7 +32,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-3">
-                        <div class="col-md-3 col-xl-2">
+                        <div class="col-md-4 col-xl-3">
                             <label for="designation_id" class="form-label">Jabatan</label>
                             <select name="designation_id" id="designation_id" class="form-select">
                                 <option value="">Semua</option>

@@ -147,7 +147,27 @@ class EmployeeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data['application'] = Application::select([
+            'name', 'copyright', 'favicon'
+        ])->first();
+
+        $data['item'] = Employee::select([
+            'employees.full_name', 'employees.number',
+            'employees.email', 'employees.phone',
+            'employees.gender', 'employees.religion',
+            'employees.place_of_birth',
+            'employees.date_of_birth',
+            'employees.date_of_joining',
+            'employees.marital_status',
+            'employees.photo', 'employees.address',
+            'employees.created_at', 'employees.updated_at',
+            'designations.name as designation',
+            'employees.id'
+        ])->leftJoin('designations', 'employees.designation_id', '=', 'designations.id')
+        ->where('employees.id', $id)
+        ->first();
+        
+        return view('pages.super-admin.employee.detail', $data);
     }
 
     /**
@@ -155,7 +175,7 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        
     }
 
     /**
