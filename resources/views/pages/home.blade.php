@@ -33,6 +33,14 @@
     
     <div class="card-body">
         <div class="row">
+            @session('error')
+                <div class="col-12 mb-3">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ $value }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            @endsession
             <div class="col-12 mb-3">
                 {{ $application->description }}
             </div>

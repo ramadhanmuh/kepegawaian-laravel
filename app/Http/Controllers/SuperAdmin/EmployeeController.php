@@ -313,6 +313,18 @@ class EmployeeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $item = Employee::select(['id', 'photo'])
+                        ->find($id);
+
+        if ($item === null) {
+            abort(404);
+        }
+
+        File::delete($item->photo);
+
+        $item->delete();
+
+        return redirect()->back()
+                        ->with('success', 'Berhasil menghapus data pegawai.');
     }
 }

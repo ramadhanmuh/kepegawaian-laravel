@@ -12,6 +12,7 @@ class Termination extends Model
      * @var list<string>
      */
     protected $fillable = [
+        'id',
         'termination_type_id',
         'employee_id',
         'subject',
@@ -19,4 +20,18 @@ class Termination extends Model
         'termination_date',
         'description',
     ];
+
+    /**
+     * The data type of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
+     * Indicates if the model's ID is auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
 }

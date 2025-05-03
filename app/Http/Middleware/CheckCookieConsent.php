@@ -16,7 +16,10 @@ class CheckCookieConsent
     public function handle(Request $request, Closure $next): Response
     {
         if (!$request->cookies->has('cookie_consent')) {
-            abort(403);
+            return redirect()->route('home')
+                            ->with('error',
+                                'Halaman tersebut harus menyetujui penggunaan cookie.'
+                            );
         }
 
         return $next($request);
