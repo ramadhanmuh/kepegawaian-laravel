@@ -96,6 +96,7 @@ Route::middleware('cookieconsent')->group(function () {
                     Route::resource('employees', EmployeeController::class);
 
                     Route::get('employee-education/list', [EmployeeEducationController::class, 'list'])->name('employee-education.list');
+                    Route::get('employee-education/employees', [EmployeeEducationController::class, 'employees'])->name('employee-education.employees');
                     Route::resource('employee-education', EmployeeEducationController::class);
                     
                 });

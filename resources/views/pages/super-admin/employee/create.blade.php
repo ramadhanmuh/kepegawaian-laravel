@@ -2,7 +2,7 @@
 
 @section('title', 'Pegawai - Tambah')
 
-@section('description', 'Halaman untuk menambahkan data pengguna.')
+@section('description', 'Halaman untuk menambahkan data pegawai.')
 
 @section('content')
     <h1 class="mt-4">Tambah Pegawai</h1>
