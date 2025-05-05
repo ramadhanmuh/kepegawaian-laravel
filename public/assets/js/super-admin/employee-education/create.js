@@ -50,8 +50,8 @@ $('#employee_id').select2({
     }
 });
 
-var selectedEmployeeID = $('#employee_id').attr('data-id');
+// var selectedEmployeeID = $('#employee_id').attr('data-id');
 
-if (selectedEmployeeID !== '') {
-    $('#employee_id').val(selectedEmployeeID).trigger('change');
-}
+// if (selectedEmployeeID !== '') {
+//     $('#employee_id').val(selectedEmployeeID).trigger('change');
+// }

@@ -61,7 +61,7 @@ $(document).ready(function() {
                 searchable: false,
                 className: 'text-xl-center align-middle',
                 render: function (data, type, row) {
-                    var dropdown = '<div class="dropdown"><button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Pilih</button><ul class="dropdown-menu">';
+                    var dropdown = '<div class="dropdown d-inline"><button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Pilih</button><ul class="dropdown-menu">';
 
                     var detailButton = '<li><a href="' + baseURL + '/super-admin/employees/' + row.id + '" class="dropdown-item"><i class="fas fa-folder-open"></i> <span>Detail</span></a></li>';
 

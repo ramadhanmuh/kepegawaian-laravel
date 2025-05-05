@@ -39,9 +39,9 @@
                                 <option value="sd">SD</option>
                                 <option value="smp">SMP</option>
                                 <option value="sma">SMA</option>
-                                <option value="s1">S1</option>
-                                <option value="s2">S2</option>
-                                <option value="s3">S3</option>
+                                <option value="s1">Sarjana (S1)</option>
+                                <option value="s2">Magister (S2)</option>
+                                <option value="s3">Doktor (S3)</option>
                             </select>
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                                 <th>Jenjang</th>
                                 <th>Nama Sekolah</th>
                                 <th>Jurusan</th>
-                                <th>Aksi</th>
+                                <th class="text-xl-center">Aksi</th>
                             </tr>
                         </thead>
                     </table>
@@ -62,3 +62,17 @@
         </div>
     </div>
 @endsection
+
+@push('styles')
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css" rel="stylesheet">
+@endpush
+
+@push('scripts')
+    <script defer src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script defer src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script defer src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script defer src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script defer src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+    <script defer src="{{ url('assets/js/super-admin/employee-education/index.js') }}"></script>
+@endpush

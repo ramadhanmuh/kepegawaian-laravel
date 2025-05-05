@@ -8,7 +8,7 @@
     <h1 class="mt-4">Tambah Pendidikan Pegawai</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item">
-            <a href="{{ route('super-admin.employees.index') }}" class="text-decoration-none">
+            <a href="{{ route('super-admin.employee-education.index') }}" class="text-decoration-none">
                 Pendidikan Pegawai
             </a>
         </li>
@@ -34,24 +34,17 @@
             @endif
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('super-admin.employees.store') }}" class="row" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('super-admin.employee-education.store') }}" class="row" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="id" id="id" required>
                         <div class="col-md-6 mb-3">
                             <label for="employee_id" class="form-label">Pegawai <small class="text-danger">*</small></label>
-                            {{-- @php
-                                $employee = null;
-
-                                if (!empty(old('employee_id'))) {
-                                    $employee = App\Models\Employee::select([
-                                        'id', 'full_name', 'number'
-                                    ])->where('id', old('id'))
-                                    ->first();
-                                }
-                            @endphp
-                            <select name="employee_id" id="employee_id" class="form-select w-100" data-id="{{ !empty($employee) ? $employee->id : '' }}" data-text="{{ !empty($employee) ? $employee->number . ' - ' . $employee->full_name : '' }}">
-                            </select> --}}
-                            <select name="employee_id" id="employee_id" class="form-select w-100" data-id="{{ !empty(old('employee_id')) ? old('id') : '' }}">
+                            <select name="employee_id" id="employee_id" class="form-select w-100">
+                                @if ($selectedEmployee !== null)
+                                    <option value="{{ $selectedEmployee->id }}" selected>
+                                        {{ $selectedEmployee->number }} - {{ $selectedEmployee->full_name }}
+                                    </option>
+                                @endif
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
