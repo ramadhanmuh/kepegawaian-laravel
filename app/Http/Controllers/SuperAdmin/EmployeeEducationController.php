@@ -150,7 +150,55 @@ class EmployeeEducationController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data['item'] = EmployeeEducation::select([
+            'employee_education.id',
+            'employee_education.employee_id',
+            'employee_education.level',
+            'employee_education.school_name',
+            'employee_education.school_address',
+            'employee_education.major',
+            'employee_education.created_at',
+            'employee_education.updated_at',
+            'employees.full_name',
+            'employees.number',
+            'employees.photo'
+        ])->join('employees', 'employee_education.employee_id', '=', 'employees.id')
+        ->where('employee_education.id', '=', $id)
+        ->first();
+
+        if ($data['item'] === null) {
+            abort(404);
+        }
+
+        switch ($data['item']->level) {
+            case 'sd':
+                $data['item']->level = 'SD';
+                break;
+            case 'smp':
+                $data['item']->level = 'SMP';
+                break;
+            case 'sma':
+                $data['item']->level = 'SMA';
+                break;
+            case 's1':
+                $data['item']->level = 'Sarjana (S1)';
+                break;
+            case 's2':
+                $data['item']->level = 'Magister (S2)';
+                break;
+            case 's3':
+                $data['item']->level = 'Doktor (S3)';
+                break;
+            default:
+                $data['item']->level = '-';
+                break;
+        }
+
+        $data['application'] = Application::select([
+            'name', 'copyright', 'favicon'
+        ])->first();
+        
+        return view('pages.super-admin.employee-education.detail', $data);
     }
 
     /**
