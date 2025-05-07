@@ -113,7 +113,8 @@ class EmployeeController extends Controller
 
         $data['designations'] = Designation::select([
             'id', 'name'
-        ])->get();
+        ])->orderBy('name', 'ASC')
+        ->get();
         
         return view('pages.super-admin.employee.create', $data);
     }
@@ -194,7 +195,8 @@ class EmployeeController extends Controller
 
         $data['designations'] = Designation::select([
             'id', 'name'
-        ])->get();
+        ])->orderBy('name', 'ASC')
+        ->get();
         
         return view('pages.super-admin.employee.edit', $data);
     }

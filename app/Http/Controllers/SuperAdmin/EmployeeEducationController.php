@@ -206,7 +206,42 @@ class EmployeeEducationController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data['item'] = EmployeeEducation::select([
+            'employee_education.id',
+            'employee_education.employee_id',
+            'employee_education.level',
+            'employee_education.school_name',
+            'employee_education.school_address',
+            'employee_education.major',
+            'employee_education.created_at',
+            'employee_education.updated_at',
+            'employees.full_name',
+            'employees.number',
+        ])->join('employees', 'employee_education.employee_id', '=', 'employees.id')
+        ->where('employee_education.id', '=', $id)
+        ->first();
+
+        if ($data['item'] === null) {
+            abort(404);
+        }
+
+        $data['application'] = Application::select([
+            'name', 'copyright', 'favicon'
+        ])->first();
+
+        if (old('employee_id') !== null) {
+            $data['selectedEmployee'] = Employee::select([
+                'id', 'full_name', 'number'
+            ])->where('id', '=', old('employee_id'))
+            ->first();
+        } else {
+            $data['selectedEmployee'] = Employee::select([
+                'id', 'full_name', 'number'
+            ])->where('id', '=', $data['item']->employee_id)
+            ->first();
+        }
+        
+        return view('pages.super-admin.employee-education.edit', $data);
     }
 
     /**
