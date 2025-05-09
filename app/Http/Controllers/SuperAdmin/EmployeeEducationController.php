@@ -8,6 +8,7 @@ use App\Models\Application;
 use App\Models\Employee;
 use App\Models\EmployeeEducation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class EmployeeEducationController extends Controller
 {
@@ -249,7 +250,49 @@ class EmployeeEducationController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $item = EmployeeEducation::find($id);
+
+        if ($item === null) {
+            abort(404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'employee_id' => [
+                'required', 'string',
+                'exists:employees,id'
+            ],
+            'level' => [
+                'required', 'string',
+                'in:sd,smp,sma,s1,s2,s3'
+            ],
+            'school_name' => [
+                'required', 'string', 'max:255'
+            ],
+            'major' => [
+                'nullable', 'string', 'max:255'
+            ],
+            'school_address' => [
+                'required', 'string', 'max:65535'
+            ]
+        ], [], [
+            'level' => 'Jenjang',
+            'school_name' => 'Nama Sekolah/Kampus',
+            'major' => 'Jurusan',
+            'school_address' => 'Alamat Sekolah/Kampus'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+
+        EmployeeEducation::where('id', $id)
+                        ->limit(1)
+                        ->update($validator->validated());
+
+        return redirect()->route('super-admin.employee-education.index')
+                        ->with('success', 'Berhasil mengubah data pendidikan pegawai.');
     }
 
     /**
@@ -257,6 +300,15 @@ class EmployeeEducationController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $item = EmployeeEducation::find($id);
+
+        if ($item === null) {
+            abort(404);
+        }
+
+        $item->delete();
+
+        return redirect()->route('super-admin.employee-education.index')
+                        ->with('success', 'Berhasil menghapus data pendidikan pegawai.');
     }
 }
