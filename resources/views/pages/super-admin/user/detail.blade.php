@@ -47,7 +47,7 @@
                         </div>
                         <div class="col-md-6">
                             <b>Tanggal Diubah</b>
-                            <p class="m-0">{{ $item->created_at === $item->updated_at ? '-' : $item->updated_at }}</p>
+                            <p class="m-0">{{ $item->created_at == $item->updated_at ? '-' : $item->updated_at }}</p>
                         </div>
                     </div>
                 </div>

@@ -187,7 +187,7 @@
                             :
                         </div>
                         <div class="col">
-                            {{ $item->created_at === $item->updated_at ? '-' : $item->updated_at }}
+                            {{ $item->created_at == $item->updated_at ? '-' : $item->updated_at }}
                         </div>
                     </div>
                 </div>

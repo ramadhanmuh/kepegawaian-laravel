@@ -31,13 +31,12 @@
             @endsession
             <div class="card">
                 <div class="card-body">
-                    <table id="datatable" class="table table-bordered w-100 nowrap">
+                    <table id="datatable" class="table table-bordered w-100">
                         <thead>
                             <tr>
-                                <th class="text-center">No</th>
+                                <th class="text-center" style="width: 10px">No</th>
                                 <th>Nama</th>
-                                <th class="text-xl-center">Tanggal Dibuat</th>
-                                <th class="text-xl-center">Tanggal Diubah</th>
+                                <th>Deskripsi</th>
                                 <th class="text-xl-center">Aksi</th>
                             </tr>
                         </thead>

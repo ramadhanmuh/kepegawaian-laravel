@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTerminationTypeRequest;
 use App\Models\Application;
 use App\Models\TerminationType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TerminationTypeController extends Controller
 {
@@ -24,7 +26,7 @@ class TerminationTypeController extends Controller
     function list(Request $request)
     {
         $columns = [
-            'id', 'name', 'created_at', 'updated_at'
+            'id', 'name', 'description',
         ];
 
         $length = $request->input('length');
@@ -50,13 +52,14 @@ class TerminationTypeController extends Controller
         $query = TerminationType::query();
 
         $query = $query->select([
-            'id', 'name', 'created_at', 'updated_at'
+            'id', 'name', 'description'
         ]);
 
         if (is_string($searchValue) && !empty($searchValue)) {
             $query = $query->when($searchValue, function($query, $searchValue) {
                                 $query->where(function($q) use ($searchValue) {
-                                    $q->where('name', 'like', "%{$searchValue}%");
+                                    $q->where('name', 'like', "%{$searchValue}%")
+                                        ->orWhere('description', 'like', "%{$searchValue}%");
                                 });
                             });
         }
@@ -91,9 +94,12 @@ class TerminationTypeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTerminationTypeRequest $request)
     {
-        //
+        TerminationType::create($request->validated());
+
+        return redirect()->back()
+                        ->with('success', 'Berhasil membuat data jenis pemberhentian kerja.');
     }
 
     /**
@@ -101,7 +107,17 @@ class TerminationTypeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data['item'] = TerminationType::find($id);
+
+        if ($data['item'] === null) {
+            abort(404);
+        }
+
+        $data['application'] = Application::select([
+            'name', 'copyright', 'favicon'
+        ])->first();
+        
+        return view('pages.super-admin.termination-type.detail', $data);
     }
 
     /**
@@ -109,7 +125,17 @@ class TerminationTypeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data['item'] = TerminationType::find($id);
+
+        if ($data['item'] === null) {
+            abort(404);
+        }
+
+        $data['application'] = Application::select([
+            'name', 'copyright', 'favicon'
+        ])->first();
+        
+        return view('pages.super-admin.termination-type.edit', $data);
     }
 
     /**
@@ -117,7 +143,38 @@ class TerminationTypeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $item = TerminationType::find($id);
+
+        if ($item === null) {
+            abort(404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'name' => [
+                'required', 'string', 'max:255',
+            ],
+            'description' => [
+                'required', 'string', 'max:65535'
+            ]
+        ], [], [
+            'name' => 'Nama',
+            'description' => 'Deskripsi'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+
+        $input = $validator->validated();
+
+        TerminationType::where('id', $id)
+                        ->limit(1)
+                        ->update($input);
+
+        return redirect()->route('super-admin.termination-types.index')
+                        ->with('success', 'Berhasil mengubah data jenis pemberhentian kerja.');
     }
 
     /**

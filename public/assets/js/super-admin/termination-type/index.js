@@ -41,26 +41,7 @@ $(document).ready(function() {
                 }
             },
             { data: 'name', name: 'name' },
-            {
-                data: 'created_at',
-                name: 'created_at',
-                className: 'text-xl-center',
-                render: function (data, type, row) {
-                    return convertToWIB(data);
-                }
-            },
-            {
-                data: 'updated_at',
-                name: 'updated_at',
-                className: 'text-xl-center',
-                render: function (data, type, row) {
-                    if (data === row.created_at) {
-                        return '-';
-                    }
-                    
-                    return convertToWIB(data);
-                }
-            },
+            { data: 'description', name: 'description' },
             {
                 data: null,
                 name: 'action',
@@ -68,11 +49,19 @@ $(document).ready(function() {
                 searchable: false,
                 className: 'text-xl-center',
                 render: function (data, type, row) {
-                    var editButton = '<a href="' + baseURL + '/super-admin/termination-types/' + row.id + '/edit" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> <span class="d-none d-lg-inline">Ubah</span></a>';
+                    var dropdown = '<div class="dropdown d-inline"><button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Pilih</button><ul class="dropdown-menu">';
 
-                    var deleteButton = '<form class="d-inline" method="POST" action="' + baseURL + '/super-admin/termination-types/' + row.id + '"><input type="hidden" name="_token" value="' + $('meta[name="csrf-token"]').attr('content') + '" /><input type="hidden" name="_method" value="DELETE" /><button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> <span class="d-none d-lg-inline">Hapus</span></button></form>';
+                    var detailButton = '<li><a href="' + baseURL + '/super-admin/termination-types/' + row.id + '" class="dropdown-item"><i class="fas fa-folder-open"></i> <span>Detail</span></a></li>';
 
-                    return editButton + ' ' + deleteButton;
+                    var editButton = '<li><a href="' + baseURL + '/super-admin/termination-types/' + row.id + '/edit" class="dropdown-item"><i class="fas fa-edit"></i> <span>Ubah</span></a></li>';
+
+                    var deleteButton = '<li><form class="d-inline" method="POST" action="' + baseURL + '/super-admin/termination-types/' + row.id + '"><input type="hidden" name="_token" value="' + $('meta[name="csrf-token"]').attr('content') + '" /><input type="hidden" name="_method" value="DELETE" /><button type="submit" class="dropdown-item"><i class="fas fa-trash"></i> <span>Hapus</span></button></form></li>';
+
+                    dropdown += detailButton + editButton + deleteButton;
+
+                    dropdown += '</ul></div>';
+
+                    return dropdown;
                 }
             }
         ],
