@@ -71,7 +71,7 @@ class EmployeeController extends Controller
             'employees.full_name', 'employees.number',
             'designations.name as designation',
             'employees.phone'
-        ])->leftJoin('designations', 'employees.designation_id', '=', 'designations.id');
+        ])->join('designations', 'employees.designation_id', '=', 'designations.id');
 
         if (is_string($designation_id) && !empty($designation_id)) {
             $query->where('designations.id', $designation_id);

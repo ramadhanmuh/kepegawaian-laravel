@@ -13,6 +13,7 @@ use App\Http\Controllers\SuperAdmin\DesignationController;
 use App\Http\Controllers\SuperAdmin\EmployeeController;
 use App\Http\Controllers\SuperAdmin\EmployeeEducationController;
 use App\Http\Controllers\SuperAdmin\ProfileController;
+use App\Http\Controllers\SuperAdmin\TerminationController;
 use App\Http\Controllers\SuperAdmin\TerminationTypeController;
 use App\Http\Controllers\SuperAdmin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -102,6 +103,9 @@ Route::middleware('cookieconsent')->group(function () {
 
                     Route::get('termination-types/list', [TerminationTypeController::class, 'list'])->name('termination-types.list');
                     Route::resource('termination-types', TerminationTypeController::class);
+
+                    Route::get('terminations/list', [TerminationController::class, 'list'])->name('terminations.list');
+                    Route::resource('terminations', TerminationController::class);
                 });
             });
         });

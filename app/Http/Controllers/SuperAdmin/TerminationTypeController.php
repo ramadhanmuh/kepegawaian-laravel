@@ -182,6 +182,15 @@ class TerminationTypeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $item = TerminationType::find($id);
+
+        if ($item === null) {
+            abort(404);
+        }
+
+        $item->delete();
+
+        return redirect()->route('super-admin.termination-types.index')
+                        ->with('success', 'Berhasil menghapus data jenis pemberhentian kerja.');
     }
 }
