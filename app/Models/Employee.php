@@ -41,4 +41,9 @@ class Employee extends Model
      * @var bool
      */
     public $incrementing = false;
+
+    public function termination()
+    {
+        return $this->hasOne(Termination::class);
+    }
 }

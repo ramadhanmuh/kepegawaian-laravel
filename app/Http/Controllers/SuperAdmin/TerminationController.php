@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTerminationRequest;
 use App\Models\Application;
+use App\Models\Employee;
 use App\Models\Termination;
 use App\Models\TerminationType;
 use Illuminate\Http\Request;
@@ -101,15 +103,55 @@ class TerminationController extends Controller
      */
     public function create()
     {
-        //
+        $data['application'] = Application::select([
+            'name', 'copyright', 'favicon'
+        ])->first();
+
+        $data['termination_types'] = TerminationType::select([
+            'id', 'name'
+        ])->orderBy('name')
+        ->get();
+
+        $data['selectedEmployee'] = null;
+
+        if (old('employee_id') !== null) {
+            $data['selectedEmployee'] = Employee::select([
+                'id', 'full_name', 'number'
+            ])->where('id', '=', old('employee_id'))
+            ->first();
+        }
+        
+        return view('pages.super-admin.termination.create', $data);
+    }
+
+    function employees(Request $request)
+    {
+        $search = $request->q;
+
+        $data = Employee::whereDoesntHave('termination');
+
+        if ($search !== null) {
+            $data = $data->where('full_name', 'like', '%' . $search . '%')
+                        ->orWhere('number', 'like', '%' . $search . '%');
+        }
+            
+        $data = $data->select(['id', 'full_name', 'number'])
+                    ->limit(10)
+                    ->orderBy('full_name', 'asc')
+                    ->get();
+
+        return response()->json($data);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTerminationRequest $request)
     {
-        //
+        Termination::create($request->validated());
+
+        return redirect()->back()
+                        ->with('success', 'Berhasil membuat data pemberhentian kerja.');
     }
 
     /**

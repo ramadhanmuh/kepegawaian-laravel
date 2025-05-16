@@ -105,6 +105,7 @@ Route::middleware('cookieconsent')->group(function () {
                     Route::resource('termination-types', TerminationTypeController::class);
 
                     Route::get('terminations/list', [TerminationController::class, 'list'])->name('terminations.list');
+                    Route::get('terminations/employees', [TerminationController::class, 'employees'])->name('terminations.employees');
                     Route::resource('terminations', TerminationController::class);
                 });
             });

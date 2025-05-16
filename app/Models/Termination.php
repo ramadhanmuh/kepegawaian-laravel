@@ -34,4 +34,9 @@ class Termination extends Model
      * @var bool
      */
     public $incrementing = false;
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
+    }
 }
