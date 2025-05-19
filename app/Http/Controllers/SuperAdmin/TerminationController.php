@@ -9,6 +9,8 @@ use App\Models\Employee;
 use App\Models\Termination;
 use App\Models\TerminationType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class TerminationController extends Controller
 {
@@ -159,7 +161,32 @@ class TerminationController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data['item'] = Termination::select([
+            'terminations.id', 'terminations.subject',
+            'terminations.notice_date',
+            'terminations.termination_date',
+            'terminations.description',
+            'terminations.created_at',
+            'terminations.updated_at',
+            'terminations.termination_type_id',
+            'terminations.employee_id',
+            'termination_types.name AS termination_type',
+            'employees.full_name',
+            'employees.number',
+            'employees.photo'
+        ])->join('termination_types', 'terminations.termination_type_id', '=', 'termination_types.id')
+        ->join('employees', 'terminations.employee_id', '=', 'employees.id')
+        ->find($id);
+
+        if ($data['item'] === null) {
+            abort(404);
+        }
+
+        $data['application'] = Application::select([
+            'name', 'copyright', 'favicon'
+        ])->first();
+        
+        return view('pages.super-admin.termination.detail', $data);
     }
 
     /**
@@ -167,7 +194,41 @@ class TerminationController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data['item'] = Termination::select([
+            'terminations.id', 'terminations.subject',
+            'terminations.notice_date',
+            'terminations.termination_date',
+            'terminations.description',
+            'terminations.termination_type_id',
+            'terminations.employee_id',
+        ])->find($id);
+
+        if ($data['item'] === null) {
+            abort(404);
+        }
+
+        $data['termination_types'] = TerminationType::select([
+            'id', 'name'
+        ])->orderBy('name')
+        ->get();
+
+        if (old('employee_id') !== null) {
+            $data['selectedEmployee'] = Employee::select([
+                'id', 'full_name', 'number'
+            ])->where('id', '=', old('employee_id'))
+            ->first();
+        } else {
+            $data['selectedEmployee'] = Employee::select([
+                'id', 'full_name', 'number'
+            ])->where('id', '=', $data['item']->employee_id)
+            ->first();
+        }
+
+        $data['application'] = Application::select([
+            'name', 'copyright', 'favicon'
+        ])->first();
+        
+        return view('pages.super-admin.termination.edit', $data);
     }
 
     /**
@@ -175,7 +236,67 @@ class TerminationController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $item = Termination::select([
+            'terminations.id', 'terminations.subject',
+            'terminations.notice_date',
+            'terminations.termination_date',
+            'terminations.description',
+            'terminations.termination_type_id',
+            'terminations.employee_id',
+        ])->find($id);
+
+        if ($item === null) {
+            abort(404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'employee_id' => [
+                'required', 'string',
+                'exists:employees,id',
+                Rule::unique('terminations')->ignore($id)
+            ],
+            'termination_type_id' => [
+                'required', 'string',
+                'exists:termination_types,id',
+            ],
+            'subject' => [
+                'required', 'string',
+                'max:255'
+            ],
+            'notice_date' => [
+                'required',
+                Rule::date()->format('Y-m-d')
+            ],
+            'termination_date' => [
+                'required',
+                Rule::date()->format('Y-m-d'),
+                'after_or_equal:notice_date'
+            ],
+            'description' => [
+                'required', 'string',
+                'max:65535'
+            ]
+        ], [], [
+            'employee_id' => 'Pegawai',
+            'termination_type_id' => 'Jenis Pemberhentian',
+            'subject' => 'Subyek',
+            'notice_date' => 'Tanggal Pemberitahuan',
+            'termination_date' => 'Tanggal Pemberhentian Kerja',
+            'description' => 'Deskripsi'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+
+        Termination::where('id', $id)
+                    ->limit(1)
+                    ->update($validator->validated());
+
+        return redirect()->route('super-admin.terminations.index')
+                    ->with('success', 'Berhasil mengubah data pemberhentian kerja.');
     }
 
     /**
@@ -183,6 +304,17 @@ class TerminationController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $item = Termination::select([
+            'terminations.id'
+        ])->find($id);
+
+        if ($item === null) {
+            abort(404);
+        }
+
+        $item->delete();
+
+        return redirect()->route('super-admin.terminations.index')
+                        ->with('success', 'Berhasil menghapus data pemberhentian kerja.');
     }
 }
