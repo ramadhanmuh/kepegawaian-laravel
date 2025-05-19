@@ -9,12 +9,9 @@ function convertToWIB(input) {
     var year = wibDate.getUTCFullYear();
     var month = ('0' + (wibDate.getUTCMonth() + 1)).slice(-2);
     var day = ('0' + wibDate.getUTCDate()).slice(-2);
-    var hours = ('0' + wibDate.getUTCHours()).slice(-2);
-    var minutes = ('0' + wibDate.getUTCMinutes()).slice(-2);
-    var seconds = ('0' + wibDate.getUTCSeconds()).slice(-2);
   
     // Format akhir: YYYY-MM-DD HH:MM:SS
-    return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+    return year + '-' + month + '-' + day;
 }
 
 $(document).ready(function() {
@@ -48,7 +45,7 @@ $(document).ready(function() {
                 name: 'full_name',
                 orderable: false,
                 searchable: false,
-                className: 'text-center align-middle',
+                className: 'align-middle',
                 render: function (data, type, row, meta) {
                     var render = data;
 

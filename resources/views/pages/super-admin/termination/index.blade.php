@@ -49,7 +49,7 @@
                     <table id="datatable" class="table table-bordered w-100">
                         <thead>
                             <tr>
-                                <th class="text-center">No</th>
+                                <th class="text-center" style="width: 10px">No</th>
                                 <th>Pegawai</th>
                                 <th>Jenis</th>
                                 <th>Subyek</th>
