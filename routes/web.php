@@ -57,6 +57,7 @@ Route::middleware('cookieconsent')->group(function () {
                     Route::prefix('dashboard')->group(function () {
                         Route::name('dashboard.')->group(function () {
                             Route::get('/', [DashboardController::class, 'index'])->name('index');
+                            Route::get('total-active-employee', [DashboardController::class, 'totalActiveEmployee'])->name('total-active-employee');
                         });
                     });
     
