@@ -58,6 +58,10 @@ Route::middleware('cookieconsent')->group(function () {
                         Route::name('dashboard.')->group(function () {
                             Route::get('/', [DashboardController::class, 'index'])->name('index');
                             Route::get('total-active-employee', [DashboardController::class, 'totalActiveEmployee'])->name('total-active-employee');
+                            Route::get('total-non-active-employee', [DashboardController::class, 'totalNonActiveEmployee'])->name('total-non-active-employee');
+                            Route::get('total-male-employee', [DashboardController::class, 'totalMaleEmployee'])->name('total-male-employee');
+                            Route::get('total-female-employee', [DashboardController::class, 'totalFemaleEmployee'])->name('total-female-employee');
+                            Route::get('total-employee-education', [DashboardController::class, 'totalEmployeeEducation'])->name('total-employee-education');
                         });
                     });
     

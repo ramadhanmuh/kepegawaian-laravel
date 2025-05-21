@@ -75,3 +75,11 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    @session('alertError')
+        <script>
+            alert('{{ $value }}');
+        </script>
+    @endsession
+@endpush

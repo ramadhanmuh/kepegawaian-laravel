@@ -127,5 +127,11 @@
 @endsection
 
 @push('scripts')
+    @session('alertError')
+        <script>
+            alert('{{ $value }}');
+        </script>
+    @endsession
+
     <script defer src="{{ url('assets/js/super-admin/employee/create.js') }}"></script>
 @endpush

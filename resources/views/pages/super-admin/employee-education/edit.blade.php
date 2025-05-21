@@ -88,6 +88,12 @@
 @endpush
 
 @push('scripts')
+    @session('alertError')
+        <script>
+            alert('{{ $value }}');
+        </script>
+    @endsession
+
     <script defer src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script defer src="{{ url('assets/js/super-admin/employee-education/edit.js') }}"></script>

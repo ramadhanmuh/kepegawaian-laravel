@@ -25,8 +25,65 @@ class DashboardController extends Controller
                     ->count();
 
         return response()->json([
-            // 'total' => $total
-            'total' => 1000
+            'total' => $total
         ]);
+    }
+
+    function totalNonActiveEmployee() {
+        $total = DB::table('terminations')
+                    ->count();
+
+        return response()->json([
+            'total' => $total
+        ]);
+    }
+
+    function totalMaleEmployee() {
+        $total = DB::table('employees')
+                    ->where('gender', '=', 'pria')
+                    ->count();
+
+        return response()->json([
+            'total' => $total
+        ]);
+    }
+
+    function totalFemaleEmployee() {
+        $total = DB::table('employees')
+                    ->where('gender', '=', 'wanita')
+                    ->count();
+
+        return response()->json([
+            'total' => $total
+        ]);
+    }
+
+    function totalEmployeeEducation() {
+        $levels = ['sd', 'smp', 'sma', 's1', 's2', 's3'];
+
+        $levelOrder = array_flip($levels);
+
+        $data = DB::table('employee_education')
+                ->select('employee_id', 'level')
+                ->get()
+                ->groupBy('employee_id')
+                ->map(function ($group) use ($levelOrder) {
+                    return collect($group)
+                        ->sortByDesc(fn($item) => $levelOrder[$item->level])
+                        ->first()
+                        ->level;
+                })
+                ->values()
+                ->countBy()
+                ->toArray();
+
+        // Pastikan level yang tidak muncul tetap nol
+        $result = [];
+
+        foreach ($levels as $level) {
+            $result[$level] = $data[$level] ?? 0;
+        }
+
+        return response()->json($result);
     }
 }
