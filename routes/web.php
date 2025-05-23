@@ -62,6 +62,7 @@ Route::middleware('cookieconsent')->group(function () {
                             Route::get('total-male-employee', [DashboardController::class, 'totalMaleEmployee'])->name('total-male-employee');
                             Route::get('total-female-employee', [DashboardController::class, 'totalFemaleEmployee'])->name('total-female-employee');
                             Route::get('total-employee-education', [DashboardController::class, 'totalEmployeeEducation'])->name('total-employee-education');
+                            Route::get('total-employee-age', [DashboardController::class, 'totalEmployeeAge'])->name('total-employee-age');
                         });
                     });
     

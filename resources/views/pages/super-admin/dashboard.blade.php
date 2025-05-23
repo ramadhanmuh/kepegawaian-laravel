@@ -56,6 +56,16 @@
         <div class="col-xl-6">
             <div class="card">
                 <div class="card-header">
+                    <h5 class="m-0">Usia Pegawai</h5>
+                </div>
+                <div class="card-body" id="employeeAgeChartColumn">
+                    <canvas id="employeeAgeChart" class="w-100" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header">
                     <h5 class="m-0">
                         Pendidikan Pegawai
                     </h5>
