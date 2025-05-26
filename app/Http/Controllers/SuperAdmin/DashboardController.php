@@ -5,7 +5,6 @@ namespace App\Http\Controllers\SuperAdmin;
 use App\Http\Controllers\Controller;
 use App\Models\Application;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -89,35 +88,43 @@ class DashboardController extends Controller
     }
 
     function totalEmployeeAge() {
-        $employees = DB::table('employees')->select('date_of_birth')->get();
-
-        $groups = [
-            '20 tahun ke bawah' => 0,
-            'Usia 20an' => 0,
-            'Usia 30an' => 0,
-            'Usia 40an' => 0,
-            'Usia 50an' => 0,
-            'Usia 60 tahun ke atas' => 0,
+        $age_group = [
+            '20_ke_bawah' => 0,
+            '20an' => 0,
+            '30an' => 0,
+            '40an' => 0,
+            '50an' => 0,
+            '60_dan_ke_atas' => 0,
         ];
 
-        foreach ($employees as $emp) {
-            $age = Carbon::parse($emp->date_of_birth)->age;
+        $today = Carbon::today()->toDateString();
 
-            if ($age <= 20) {
-                $groups['20 tahun ke bawah']++;
-            } elseif ($age >= 21 && $age <= 29) {
-                $groups['Usia 20an']++;
-            } elseif ($age >= 30 && $age <= 39) {
-                $groups['Usia 30an']++;
-            } elseif ($age >= 40 && $age <= 49) {
-                $groups['Usia 40an']++;
-            } elseif ($age >= 50 && $age <= 59) {
-                $groups['Usia 50an']++;
-            } else {
-                $groups['Usia 60 tahun ke atas']++;
+        $data = DB::table('employees')
+            ->selectRaw('
+                CASE
+                    WHEN TIMESTAMPDIFF(YEAR, date_of_birth, ?) <= 20 THEN "20_ke_bawah"
+                    WHEN TIMESTAMPDIFF(YEAR, date_of_birth, ?) BETWEEN 21 AND 29 THEN "20an"
+                    WHEN TIMESTAMPDIFF(YEAR, date_of_birth, ?) BETWEEN 30 AND 39 THEN "30an"
+                    WHEN TIMESTAMPDIFF(YEAR, date_of_birth, ?) BETWEEN 40 AND 49 THEN "40an"
+                    WHEN TIMESTAMPDIFF(YEAR, date_of_birth, ?) BETWEEN 50 AND 59 THEN "50an"
+                    ELSE "60_dan_ke_atas"
+                END AS age_group,
+                COUNT(*) AS total
+            ', [$today, $today, $today, $today, $today])
+            ->groupBy('age_group')
+            ->orderByRaw('
+                FIELD(age_group, 
+                    "20_ke_bawah", "20an", "30an", "40an", "50an", "60_dan_ke_atas"
+                )
+            ')
+            ->get();
+
+        if ($data !== null) {
+            foreach ($data as $value) {
+                $age_group[$value->age_group] = $value->total;
             }
         }
 
-        return response()->json($groups);
+        return response()->json($age_group);
     }
 }

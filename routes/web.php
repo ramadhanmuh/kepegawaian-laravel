@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\ChangePasswordController as AdminChangePasswordController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\HomeController;
@@ -126,6 +128,27 @@ Route::middleware('cookieconsent')->group(function () {
                     Route::prefix('dashboard')->group(function () {
                         Route::name('dashboard.')->group(function () {
                             Route::get('/', [AdminDashboardController::class, 'index'])->name('index');
+                            Route::get('total-active-employee', [AdminDashboardController::class, 'totalActiveEmployee'])->name('total-active-employee');
+                            Route::get('total-non-active-employee', [AdminDashboardController::class, 'totalNonActiveEmployee'])->name('total-non-active-employee');
+                            Route::get('total-male-employee', [AdminDashboardController::class, 'totalMaleEmployee'])->name('total-male-employee');
+                            Route::get('total-female-employee', [AdminDashboardController::class, 'totalFemaleEmployee'])->name('total-female-employee');
+                            Route::get('total-employee-education', [AdminDashboardController::class, 'totalEmployeeEducation'])->name('total-employee-education');
+                            Route::get('total-employee-age', [AdminDashboardController::class, 'totalEmployeeAge'])->name('total-employee-age');
+                        });
+                    });
+
+                    Route::prefix('profil')->group(function () {
+                        Route::name('profile.')->group(function () {
+                            Route::get('/', [AdminProfileController::class, 'index'])->name('index');
+                            Route::get('edit', [AdminProfileController::class, 'edit'])->name('edit');
+                            Route::put('edit', [AdminProfileController::class, 'update'])->name('update');
+                        });
+                    });
+
+                    Route::prefix('change-password')->group(function () {
+                        Route::name('change-password.')->group(function () {
+                            Route::get('/', [AdminChangePasswordController::class, 'edit'])->name('edit');
+                            Route::put('', [AdminChangePasswordController::class, 'update'])->name('update');
                         });
                     });
     
