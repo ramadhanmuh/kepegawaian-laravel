@@ -8,7 +8,7 @@ $(document).ready(function() {
         responsive: true,
         cache: false,
         ajax: {
-            url: baseURL + '/super-admin/termination-types/list',
+            url: baseURL + '/admin/termination-types/list',
         },
         columns: [
             {
@@ -32,11 +32,11 @@ $(document).ready(function() {
                 render: function (data, type, row) {
                     var dropdown = '<div class="dropdown d-inline"><button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Pilih</button><ul class="dropdown-menu">';
 
-                    var detailButton = '<li><a href="' + baseURL + '/super-admin/termination-types/' + row.id + '" class="dropdown-item"><i class="fas fa-folder-open"></i> <span>Detail</span></a></li>';
+                    var detailButton = '<li><a href="' + baseURL + '/admin/termination-types/' + row.id + '" class="dropdown-item"><i class="fas fa-folder-open"></i> <span>Detail</span></a></li>';
 
-                    var editButton = '<li><a href="' + baseURL + '/super-admin/termination-types/' + row.id + '/edit" class="dropdown-item"><i class="fas fa-edit"></i> <span>Ubah</span></a></li>';
+                    var editButton = '<li><a href="' + baseURL + '/admin/termination-types/' + row.id + '/edit" class="dropdown-item"><i class="fas fa-edit"></i> <span>Ubah</span></a></li>';
 
-                    var deleteButton = '<li><form class="d-inline" method="POST" action="' + baseURL + '/super-admin/termination-types/' + row.id + '"><input type="hidden" name="_token" value="' + $('meta[name="csrf-token"]').attr('content') + '" /><input type="hidden" name="_method" value="DELETE" /><button type="submit" class="dropdown-item"><i class="fas fa-trash"></i> <span>Hapus</span></button></form></li>';
+                    var deleteButton = '<li><form class="d-inline" method="POST" action="' + baseURL + '/admin/termination-types/' + row.id + '"><input type="hidden" name="_token" value="' + $('meta[name="csrf-token"]').attr('content') + '" /><input type="hidden" name="_method" value="DELETE" /><button type="submit" class="dropdown-item"><i class="fas fa-trash"></i> <span>Hapus</span></button></form></li>';
 
                     dropdown += detailButton + editButton + deleteButton;
 

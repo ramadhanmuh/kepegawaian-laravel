@@ -2,7 +2,7 @@
 
 @section('title', 'Jenis Pemberhentian Kerja - Ubah')
 
-@section('description', 'Halaman untuk menambahkan data pengguna.')
+@section('description', 'Halaman untuk menambahkan data jenis pemberhentian kerja.')
 
 @section('content')
     <h1 class="mt-4">Ubah Jenis Pemberhentian Kerja</h1>

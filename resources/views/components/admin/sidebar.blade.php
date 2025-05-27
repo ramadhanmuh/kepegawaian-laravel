@@ -16,7 +16,7 @@
                         <a class="nav-link" href="{{ route('admin.designations.index') }}">Jabatan</a>
                         <a class="nav-link" href="{{ route('admin.employees.index') }}">Pegawai</a>
                         <a class="nav-link" href="{{ route('admin.employee-education.index') }}">Pendidikan Pegawai</a>
-                        <a class="nav-link" href="layout-sidenav-light.html">Jenis Pemberhentian</a>
+                        <a class="nav-link" href="{{ route('admin.termination-types.index') }}">Jenis Pemberhentian</a>
                         <a class="nav-link" href="layout-sidenav-light.html">Pemberhentian Kerja</a>
                     </nav>
                 </div>

@@ -1,4 +1,4 @@
-@extends('layouts.super-admin')
+@extends('layouts.admin')
 
 @section('title', 'Jenis Pemberhentian Kerja - Detail')
 
@@ -8,7 +8,7 @@
     <h1 class="mt-4">Detail Jenis Pemberhentian Kerja</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item">
-            <a href="{{ route('super-admin.termination-types.index') }}" class="text-decoration-none">
+            <a href="{{ route('admin.termination-types.index') }}" class="text-decoration-none">
                 Jenis Pemberhentian Kerja
             </a>
         </li>
@@ -16,7 +16,7 @@
     </ol>
     <div class="row mb-3">
         <div class="col-12 mb-3 text-end">
-            <a href="{{ route('super-admin.termination-types.edit', $item->id) }}" class="btn btn-warning btn-sm">
+            <a href="{{ route('admin.termination-types.edit', $item->id) }}" class="btn btn-warning btn-sm">
                 <i class="fas fa-edit"></i>
                 Ubah
             </a>
@@ -75,11 +75,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    @session('alertError')
-        <script>
-            alert('{{ $value }}');
-        </script>
-    @endsession
-@endpush

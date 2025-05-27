@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DesignationController as AdminDesignationControll
 use App\Http\Controllers\Admin\EmployeeController as AdminEmployeeController;
 use App\Http\Controllers\Admin\EmployeeEducationController as AdminEmployeeEducationController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
+use App\Http\Controllers\Admin\TerminationTypeController as AdminTerminationTypeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\HomeController;
@@ -166,6 +167,9 @@ Route::middleware('cookieconsent')->group(function () {
                     Route::get('employee-education/list', [AdminEmployeeEducationController::class, 'list'])->name('employee-education.list');
                     Route::get('employee-education/employees', [AdminEmployeeEducationController::class, 'employees'])->name('employee-education.employees');
                     Route::resource('employee-education', AdminEmployeeEducationController::class);
+
+                    Route::get('termination-types/list', [AdminTerminationTypeController::class, 'list'])->name('termination-types.list');
+                    Route::resource('termination-types', AdminTerminationTypeController::class);
     
                 });
             });

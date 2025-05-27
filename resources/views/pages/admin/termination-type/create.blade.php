@@ -1,4 +1,4 @@
-@extends('layouts.super-admin')
+@extends('layouts.admin')
 
 @section('title', 'Jenis Pemberhentian Kerja - Tambah')
 
@@ -8,7 +8,7 @@
     <h1 class="mt-4">Tambah Jenis Pemberhentian Kerja</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item">
-            <a href="{{ route('super-admin.termination-types.index') }}" class="text-decoration-none">
+            <a href="{{ route('admin.termination-types.index') }}" class="text-decoration-none">
                 Jenis Pemberhentian Kerja
             </a>
         </li>
@@ -34,7 +34,7 @@
             @endif
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('super-admin.termination-types.store') }}" class="row" method="POST">
+                    <form action="{{ route('admin.termination-types.store') }}" class="row" method="POST">
                         @csrf
                         <div class="col-12 mb-3">
                             <div class="row">
@@ -66,11 +66,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    @session('alertError')
-        <script>
-            alert('{{ $value }}');
-        </script>
-    @endsession
-@endpush
