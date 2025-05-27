@@ -2,7 +2,7 @@
 
 @section('title', 'Jabatan - Ubah')
 
-@section('description', 'Halaman untuk menambahkan data pengguna.')
+@section('description', 'Halaman untuk menambahkan data jabatan.')
 
 @section('content')
     <h1 class="mt-4">Ubah Jabatan</h1>

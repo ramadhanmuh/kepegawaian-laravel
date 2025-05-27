@@ -1,4 +1,4 @@
-@extends('layouts.super-admin')
+@extends('layouts.admin')
 
 @section('title', 'Jabatan - Tambah')
 
@@ -8,7 +8,7 @@
     <h1 class="mt-4">Tambah Jabatan</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item">
-            <a href="{{ route('super-admin.designations.index') }}" class="text-decoration-none">
+            <a href="{{ route('admin.designations.index') }}" class="text-decoration-none">
                 Jabatan
             </a>
         </li>
@@ -34,7 +34,7 @@
             @endif
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('super-admin.designations.store') }}" class="row" method="POST">
+                    <form action="{{ route('admin.designations.store') }}" class="row" method="POST">
                         @csrf
                         <div class="col-12 mb-3">
                             <div class="row align-items-center">
@@ -60,11 +60,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    @session('alertError')
-        <script>
-            alert('{{ $value }}');
-        </script>
-    @endsession
-@endpush

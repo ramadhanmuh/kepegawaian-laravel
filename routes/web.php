@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\Admin\ChangePasswordController as AdminChangePasswordController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\DesignationController as AdminDesignationController;
+use App\Http\Controllers\Admin\EmployeeController as AdminEmployeeController;
+use App\Http\Controllers\Admin\EmployeeEducationController as AdminEmployeeEducationController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForgotPasswordController;
@@ -151,6 +154,18 @@ Route::middleware('cookieconsent')->group(function () {
                             Route::put('', [AdminChangePasswordController::class, 'update'])->name('update');
                         });
                     });
+
+                    Route::get('designations/list', [AdminDesignationController::class, 'list'])->name('designations.list');
+                    Route::resource('designations', AdminDesignationController::class)->except([
+                        'show'
+                    ]);
+
+                    Route::get('employees/list', [AdminEmployeeController::class, 'list'])->name('employees.list');
+                    Route::resource('employees', AdminEmployeeController::class);
+
+                    Route::get('employee-education/list', [AdminEmployeeEducationController::class, 'list'])->name('employee-education.list');
+                    Route::get('employee-education/employees', [AdminEmployeeEducationController::class, 'employees'])->name('employee-education.employees');
+                    Route::resource('employee-education', AdminEmployeeEducationController::class);
     
                 });
             });

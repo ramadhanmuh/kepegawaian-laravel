@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\SuperAdmin;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDesignationRequest;
@@ -23,7 +23,7 @@ class DesignationController extends Controller
             'name', 'copyright', 'favicon'
         ])->first();
         
-        return view('pages.super-admin.designation.index', $data);
+        return view('pages.admin.designation.index', $data);
     }
 
     function list(Request $request): JsonResponse
@@ -90,7 +90,7 @@ class DesignationController extends Controller
             'name', 'copyright', 'favicon'
         ])->first();
 
-        return view('pages.super-admin.designation.create', $data);
+        return view('pages.admin.designation.create', $data);
     }
 
     /**
@@ -127,7 +127,7 @@ class DesignationController extends Controller
             'name', 'copyright', 'favicon'
         ])->first();
 
-        return view('pages.super-admin.designation.edit', $data);
+        return view('pages.admin.designation.edit', $data);
     }
 
     /**
@@ -162,7 +162,7 @@ class DesignationController extends Controller
                         'name' => $request->name
                     ]);
 
-        return redirect()->route('super-admin.designations.index')
+        return redirect()->route('admin.designations.index')
                         ->with('success', 'Berhasil mengubah data jabatan.');
     }
 
@@ -179,7 +179,7 @@ class DesignationController extends Controller
 
         $item->delete();
 
-        return redirect()->route('super-admin.designations.index')
+        return redirect()->route('admin.designations.index')
                         ->with('success', 'Berhasil menghapus data jabatan.');
     }
 }

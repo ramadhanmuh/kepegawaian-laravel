@@ -1,4 +1,4 @@
-@extends('layouts.super-admin')
+@extends('layouts.admin')
 
 @section('title', 'Pendidikan Pegawai - Detail')
 
@@ -8,7 +8,7 @@
     <h1 class="mt-4">Detail Pendidikan Pegawai</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item">
-            <a href="{{ route('super-admin.employee-education.index') }}" class="text-decoration-none">
+            <a href="{{ route('admin.employee-education.index') }}" class="text-decoration-none">
                 Pendidikan Pegawai
             </a>
         </li>
@@ -16,7 +16,7 @@
     </ol>
     <div class="row mb-3">
         <div class="col-12 mb-3 text-end">
-            <a href="{{ route('super-admin.employee-education.edit', $item->id) }}" class="btn btn-warning btn-sm">
+            <a href="{{ route('admin.employee-education.edit', $item->id) }}" class="btn btn-warning btn-sm">
                 <i class="fas fa-edit"></i>
                 Ubah
             </a>
@@ -26,12 +26,12 @@
                 <div class="card-body">
                     <div class="row justify-content-center">
                         <div class="col-12 mb-3 text-center">
-                            <a href="{{ route('super-admin.employees.show', $item->employee_id) }}" class="text-decoration-none">
+                            <a href="{{ route('admin.employees.show', $item->employee_id) }}" class="text-decoration-none">
                                 <img src="{{ url($item->photo) }}" alt="Foto Pendidikan Pegawai" width="124">
                             </a>
                         </div>
                         <div class="col-12 text-center">
-                            <a href="{{ route('super-admin.employees.show', $item->employee_id) }}" class="text-decoration-none">
+                            <a href="{{ route('admin.employees.show', $item->employee_id) }}" class="text-decoration-none">
                                 <h5>{{ $item->full_name }} ({{ $item->number }})</h5>
                             </a>
                         </div>
@@ -70,11 +70,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    @session('alertError')
-        <script>
-            alert('{{ $value }}');
-        </script>
-    @endsession
-@endpush

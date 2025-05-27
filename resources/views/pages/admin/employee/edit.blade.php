@@ -1,4 +1,4 @@
-@extends('layouts.super-admin')
+@extends('layouts.admin')
 
 @section('title', 'Pegawai - Ubah')
 
@@ -8,7 +8,7 @@
     <h1 class="mt-4">Ubah Pegawai</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item">
-            <a href="{{ route('super-admin.employees.index') }}" class="text-decoration-none">
+            <a href="{{ route('admin.employees.index') }}" class="text-decoration-none">
                 Pegawai
             </a>
         </li>
@@ -34,7 +34,7 @@
             @endif
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('super-admin.employees.update', $item->id) }}" class="row" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.employees.update', $item->id) }}" class="row" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="col-md-6 mb-3">
@@ -126,11 +126,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    @session('alertError')
-        <script>
-            alert('{{ $value }}');
-        </script>
-    @endsession
-@endpush
