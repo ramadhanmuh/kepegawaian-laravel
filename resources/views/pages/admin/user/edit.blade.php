@@ -1,4 +1,4 @@
-@extends('layouts.super-admin')
+@extends('layouts.admin')
 
 @section('title', 'Pengguna - Ubah')
 
@@ -8,7 +8,7 @@
     <h1 class="mt-4">Ubah Pengguna</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item">
-            <a href="{{ route('super-admin.users.index') }}" class="text-decoration-none">
+            <a href="{{ route('admin.users.index') }}" class="text-decoration-none">
                 Pengguna
             </a>
         </li>
@@ -34,7 +34,7 @@
             @endif
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('super-admin.users.update', $item->id) }}" class="row" method="POST">
+                    <form action="{{ route('admin.users.update', $item->id) }}" class="row" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="col-md-6 mb-3">
@@ -56,15 +56,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="role" class="form-label">Jenis</label>
-                            <select name="role" id="role" class="form-select" required>
-                                <option value="">-- Pilih --</option>
-                                <option value="super_admin" {{ old('role') === null ? ($item->role === 'super_admin' ? 'selected' : '') : (old('role') === 'super_admin' ? 'selected' : '') }}>
-                                    Super Admin
-                                </option>
-                                <option value="admin" {{ old('role') === null ? ($item->role === 'admin' ? 'selected' : '') : (old('role') === 'admin' ? 'selected' : '') }}>
-                                    Admin
-                                </option>
-                            </select>
+                            <input type="text" class="form-control" value="Admin" disabled>
                         </div>
                         <div class="col-12">
                             <button type="submit" class="btn btn-primary">Simpan</button>
@@ -75,11 +67,3 @@
         </div>
     </div>
 @endsection
-
-@push('scripts')
-    @session('alertError')
-        <script>
-            alert('{{ $value }}');
-        </script>
-    @endsession
-@endpush

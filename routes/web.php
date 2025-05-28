@@ -6,7 +6,9 @@ use App\Http\Controllers\Admin\DesignationController as AdminDesignationControll
 use App\Http\Controllers\Admin\EmployeeController as AdminEmployeeController;
 use App\Http\Controllers\Admin\EmployeeEducationController as AdminEmployeeEducationController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
+use App\Http\Controllers\Admin\TerminationController as AdminTerminationController;
 use App\Http\Controllers\Admin\TerminationTypeController as AdminTerminationTypeController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\HomeController;
@@ -170,6 +172,13 @@ Route::middleware('cookieconsent')->group(function () {
 
                     Route::get('termination-types/list', [AdminTerminationTypeController::class, 'list'])->name('termination-types.list');
                     Route::resource('termination-types', AdminTerminationTypeController::class);
+
+                    Route::get('terminations/list', [AdminTerminationController::class, 'list'])->name('terminations.list');
+                    Route::get('terminations/employees', [AdminTerminationController::class, 'employees'])->name('terminations.employees');
+                    Route::resource('terminations', AdminTerminationController::class);
+
+                    Route::get('users/list', [AdminUserController::class, 'list'])->name('users.list');
+                    Route::resource('users', AdminUserController::class);
     
                 });
             });

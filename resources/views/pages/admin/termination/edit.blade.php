@@ -1,14 +1,14 @@
-@extends('layouts.super-admin')
+@extends('layouts.admin')
 
 @section('title', 'Pemberhentian Kerja - Ubah')
 
-@section('description', 'Halaman untuk mengubah data pemberhentian kerja.')
+@section('description', 'Halaman untuk menambahkan data Pemberhentian Kerja.')
 
 @section('content')
     <h1 class="mt-4">Ubah Pemberhentian Kerja</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item">
-            <a href="{{ route('super-admin.terminations.index') }}" class="text-decoration-none">
+            <a href="{{ route('admin.terminations.index') }}" class="text-decoration-none">
                 Pemberhentian Kerja
             </a>
         </li>
@@ -34,7 +34,7 @@
             @endif
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('super-admin.terminations.update', $item->id) }}" class="row" method="POST">
+                    <form action="{{ route('admin.terminations.update', $item->id) }}" class="row" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="col-md-6 mb-3">
@@ -96,13 +96,7 @@
 @endpush
 
 @push('scripts')
-    @session('alertError')
-        <script>
-            alert('{{ $value }}');
-        </script>
-    @endsession
-    
     <script defer src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script defer src="{{ url('assets/js/super-admin/termination/edit.js') }}"></script>
+    <script defer src="{{ url('assets/js/admin/termination/edit.js') }}"></script>
 @endpush

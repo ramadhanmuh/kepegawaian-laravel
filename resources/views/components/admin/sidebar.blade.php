@@ -17,10 +17,10 @@
                         <a class="nav-link" href="{{ route('admin.employees.index') }}">Pegawai</a>
                         <a class="nav-link" href="{{ route('admin.employee-education.index') }}">Pendidikan Pegawai</a>
                         <a class="nav-link" href="{{ route('admin.termination-types.index') }}">Jenis Pemberhentian</a>
-                        <a class="nav-link" href="layout-sidenav-light.html">Pemberhentian Kerja</a>
+                        <a class="nav-link" href="{{ route('admin.terminations.index') }}">Pemberhentian Kerja</a>
                     </nav>
                 </div>
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{ route('admin.users.index') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                     Pengguna
                 </a>

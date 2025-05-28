@@ -1,4 +1,4 @@
-@extends('layouts.super-admin')
+@extends('layouts.admin')
 
 @section('title', 'Pemberhentian Kerja')
 
@@ -11,7 +11,7 @@
     </ol>
     <div class="row">
         <div class="col-12 mb-3 text-end">
-            <a href="{{ route('super-admin.terminations.create') }}" class="btn btn-primary btn-sm">
+            <a href="{{ route('admin.terminations.create') }}" class="btn btn-primary btn-sm">
                 <i class="fas fa-plus"></i>
                 Tambah
             </a>
@@ -70,16 +70,10 @@
 @endpush
 
 @push('scripts')
-    @session('alertError')
-        <script>
-            alert('{{ $value }}');
-        </script>
-    @endsession
-
     <script defer src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script defer src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script defer src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script defer src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
     <script defer src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
-    <script defer src="{{ url('assets/js/super-admin/termination/index.js') }}"></script>
+    <script defer src="{{ url('assets/js/admin/termination/index.js') }}"></script>
 @endpush

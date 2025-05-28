@@ -32,7 +32,7 @@
     @endsession
     
     <div class="card-body">
-        <div class="small mb-3 text-muted">Masukkan email anda dan kami akan kirim kamu sebuah tautan untuk atur ulang jara sandi anda.</div>
+        <div class="small mb-3 text-muted">Masukkan email anda dan kami akan kirim kamu sebuah tautan untuk atur ulang kata sandi anda.</div>
         <form method="POST" action="{{ route('forgot-password.reset') }}">
             @csrf
             <div class="form-floating mb-3">
